@@ -4,7 +4,9 @@
  */
 
 const CONFIG = {
-    // Backend API endpoint - Change this if running backend on different host/port
+    // Backend API endpoint
+    // Local development: 'http://localhost:8000'
+    // Azure production:  'https://<your-app-name>.azurewebsites.net'
     BACKEND_URL: 'http://localhost:8000',
     
     // API endpoints

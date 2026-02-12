@@ -15,16 +15,16 @@ class Settings(BaseSettings):
     
     # Application
     APP_NAME: str = "FormFiller"
-    DEBUG: bool = True
+    DEBUG: bool = os.getenv("DEBUG", "false").lower() == "true"
     
     # API
     API_HOST: str = "0.0.0.0"
-    API_PORT: int = 8000
+    API_PORT: int = int(os.getenv("PORT", "8000"))
     
     # Audio processing
     UPLOAD_DIR: str = "temp_uploads"
-    WHISPER_MODEL: str = "medium"  # Options: tiny, base, small, medium, large-v3
-    WHISPER_DEVICE: str = "cuda"  # Options: cpu, cuda
+    WHISPER_MODEL: str = os.getenv("WHISPER_MODEL", "tiny")
+    WHISPER_DEVICE: str = os.getenv("WHISPER_DEVICE", "cpu")
 
     OPENAI_API_KEY: Any = os.getenv("OPENAI_API_KEY", None)
     OPENAI_MODEL: str = "gpt-4.1-2025-04-14"
