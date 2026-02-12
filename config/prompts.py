@@ -46,9 +46,11 @@ def get_form_mapping_prompt() -> tuple[PromptTemplate, JsonOutputParser]:
                    - EMAILS: Lowercase, fix domains (e.g., "john at yahoo dot com" -> "john@yahoo.com")
                    - PHONES: Extract digits only, correct common formats
                    - ADDRESSES: Correct street types, city names, state abbreviations
-                   - DATES: Convert to YYYY-MM-DD, handle various formats
-                   - RADIO BUTTONS: Output the option label text (e.g., "Male", "Female", "BNS"). Radio fields have an "options" array - pick one.
+                   - DATES: Convert to YYYY-MM-DD using ENGLISH digits ONLY (0-9), NEVER use non-Latin digits. Handle various formats.
+                   - RADIO BUTTONS: Output the EXACT option label text from the "options" array (e.g., "Male", "Female", "BNS"). These are predefined values — always use the EXACT English text as given, even if the user spoke in Bengali/Hindi.
                    - CHECKBOXES: "true" for yes/agree/check, "false" for no/disagree/uncheck
+                   - SELECT/DROPDOWN: Output the EXACT option value or text from the "options" array provided. These are predefined — match the user's intent to the closest available option using its EXACT original text, even if the user spoke in a different language.
+                   - NUMBER FIELDS: Always use English digits (0-9), never non-Latin digits.
 
                 5. GENERAL SPELLING CORRECTIONS:
                    - Use phonetic similarity and context to correct words
@@ -61,12 +63,20 @@ def get_form_mapping_prompt() -> tuple[PromptTemplate, JsonOutputParser]:
                    - If field is "state", use abbreviations: "california" -> "CA", "texas" -> "TX"
                    - If field is "country", correct common misspellings: "united states" -> "United States"
 
-                7. LANGUAGE PRESERVATION:
-                   - If in the trascription the user says that he is speaking in bengali, preserve the language in ALL fields
-                   - If the user speaks in Bengali (or any non-English language), output ALL field values in the SAME language and script
-                   - For Bengali speech, write names, addresses, and all text fields in Bengali script (অসমীয়া/বাংলা)
-                   - Do not translate to English - preserve the original language exactly as spoken
-                   - Example: If user says "আমার নাম রাজু" (My name is Raju), output firstName: "রাজু"
+                7. LANGUAGE PRESERVATION (CRITICAL RULES):
+                   - If the user speaks in Bengali, Hindi, or any non-English language, preserve that language ONLY in FREE-TEXT fields:
+                     * text inputs, textareas, address fields, name fields, description fields — write in the user's spoken language/script
+                   - NEVER use non-English text for fields with PREDEFINED OPTIONS:
+                     * SELECT/DROPDOWN fields: Always output the EXACT predefined option text from the "options" array (these are always in English)
+                     * RADIO BUTTON fields: Always output the EXACT predefined option label from the "options" array (e.g., "Male", "Female", "Public")
+                     * DATE fields: Always use English digits and standard format (YYYY-MM-DD)
+                     * NUMBER/PHONE fields: Always use English digits (0-9)
+                     * CHECKBOX fields: Always use "true" or "false"
+                   - When the user says something in Bengali/Hindi that maps to a dropdown or radio, TRANSLATE the intent and pick the matching English option
+                     * Example: User says "পুরুষ" (male) for a radio field with options ["Male", "Female"] → output "Male"
+                     * Example: User says "ভারতীয়" (Indian) for a dropdown with options ["Indian", "Bangladesh"] → output "Indian"
+                     * Example: User says "নাম রাজু দাস" for a text input → output "রাজু দাস" (preserve Bengali for text)
+                   - In summary: Bengali/Hindi script goes into text fields ONLY. Everything else uses the predefined English values.
 
                 8. ONLY INCLUDE FIELDS MENTIONED:
                    - If user didn't mention a field, don't include it
@@ -76,8 +86,11 @@ def get_form_mapping_prompt() -> tuple[PromptTemplate, JsonOutputParser]:
                 - Speech: "my name is jon smoth, email john at gmial dot com, phone won too three four five six seven eight nine"
                   -> firstName: "John", lastName: "Smith", email: "john@gmail.com", phone: "123456789"
 
-                - Bengali Speech: "আমার নাম রাজু দাস, ইমেইল রাজু at জিমেইল dot কম"
-                  -> firstName: "রাজু", lastName: "দাস", email: "রাজু@জিমেইল.কম"
+                - Bengali Speech (text fields get Bengali, dropdowns/radios get English):
+                  User says: "আমার নাম রাজু দাস, জেন্ডার পুরুষ, জাতীয়তা ভারতীয়, ইমেইল রাজু at জিমেইল dot কম"
+                  Form has: gender radio ["Male","Female","Other"], nationality dropdown ["Indian","Bangladesh","Pakistan"]
+                  -> firstName: "রাজু", lastName: "দাস", gender: "Male", nationality: "Indian", email: "raju@gmail.com"
+                  (Note: Names in Bengali script, but radio/dropdown values use EXACT predefined English text)
 
                 - Speech: "i live in nyu york on main streat, zip code won two three four five"
                   -> city: "New York", street: "Main Street", zipCode: "12345"

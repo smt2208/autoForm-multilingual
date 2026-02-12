@@ -233,8 +233,8 @@ function extractFormFields() {
         if (currentValue && currentValue !== 'unchecked') fieldInfo.currentValue = currentValue;
         
         if (options.length > 0) {
-            if (options.length > 10) {
-                fieldInfo.options = options.slice(0, 5);
+            if (options.length > 20) {
+                fieldInfo.options = options.slice(0, 20);
                 fieldInfo.optionCount = options.length;
             } else {
                 fieldInfo.options = options;
