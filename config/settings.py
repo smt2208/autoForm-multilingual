@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     
     # Audio processing
     UPLOAD_DIR: str = "temp_uploads"
-    WHISPER_MODEL: str = os.getenv("WHISPER_MODEL", "tiny")
+    WHISPER_MODEL: str = os.getenv("WHISPER_MODEL", "base")
     WHISPER_DEVICE: str = os.getenv("WHISPER_DEVICE", "cpu")
 
     OPENAI_API_KEY: Any = os.getenv("OPENAI_API_KEY", None)

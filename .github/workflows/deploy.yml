@@ -10,7 +10,7 @@ on:
   workflow_dispatch:          # allows manual trigger from GitHub UI
 
 env:
-  ACR_NAME: formfilleracr               # Azure Container Registry name (lowercase, no dashes)
+  ACR_NAME: autoformacr                  # Azure Container Registry name (lowercase, no dashes)
   IMAGE_NAME: formfiller-backend
   RESOURCE_GROUP: formfiller-rg
   APP_SERVICE_NAME: formfiller-backend   # Azure Web App name
