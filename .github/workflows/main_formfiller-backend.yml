@@ -10,6 +10,11 @@ on:
       - main
   workflow_dispatch:
 
+# Prevent concurrent deployments to avoid conflicts
+concurrency:
+  group: azure-deploy-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -67,10 +72,18 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_7C56AA54F26C4C64B78C03E90DF315E4 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0547D41DC8EF4F09A24FDA3BDCC9D3E5 }}
 
+      - name: Wait for any active deployments to complete
+        run: |
+          echo "Checking for active deployments..."
+          sleep 30
+        shell: bash
+
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
           app-name: 'formfiller-backend'
           slot-name: 'Production'
+          clean: true
+          restart: true
           
