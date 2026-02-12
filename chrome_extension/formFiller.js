@@ -3,6 +3,33 @@
  * Handles filling form fields with provided data
  */
 
+// Maps for converting non-Latin (Bengali, Devanagari, Arabic, etc.) digits to ASCII
+const NON_LATIN_DIGIT_MAP = {
+    // Bengali
+    '০':'0','১':'1','২':'2','৩':'3','৪':'4','৫':'5','৬':'6','৭':'7','৮':'8','৯':'9',
+    // Devanagari
+    '०':'0','१':'1','२':'2','३':'3','४':'4','५':'5','६':'6','७':'7','८':'8','९':'9',
+    // Arabic-Indic
+    '٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9',
+};
+
+/**
+ * Convert non-Latin digits to ASCII digits.
+ * Used for inputs that only accept ASCII (number, date, tel, etc.)
+ */
+function toAsciiDigits(str) {
+    if (!str) return str;
+    return String(str).replace(/[^\x00-\x7F]/g, ch => NON_LATIN_DIGIT_MAP[ch] || ch);
+}
+
+/**
+ * Check if an input element requires ASCII-only numeric values
+ */
+function requiresAsciiValue(element) {
+    const numericTypes = ['number', 'tel', 'date', 'time', 'datetime-local', 'month', 'week', 'range'];
+    return numericTypes.includes(element.type?.toLowerCase());
+}
+
 /**
  * Format time value to HH:MM format
  * Accepts various formats: "2:30 PM", "14:30", "230", etc.
@@ -223,12 +250,15 @@ function fillFormFields(fieldData) {
             
             // --- TEXT INPUTS & TEXTAREA ---
             } else {
+                // Convert non-Latin digits for inputs that require ASCII (number, date, tel, etc.)
+                let fillValue = requiresAsciiValue(element) ? toAsciiDigits(value) : value;
+
                 if (element.classList.contains('timepicker') || element.id.includes('time')) {
-                    element.value = formatTime(value) || value;
+                    element.value = formatTime(fillValue) || fillValue;
                 } else if (element.id.includes('date') || element.type === 'date') {
-                    element.value = formatDate(value, element.type === 'date') || value;
+                    element.value = formatDate(fillValue, element.type === 'date') || fillValue;
                 } else {
-                    element.value = value;
+                    element.value = fillValue;
                 }
                 
                 // Use native setter to trigger framework change detection (React, Angular, etc.)

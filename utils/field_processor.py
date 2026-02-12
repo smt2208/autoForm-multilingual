@@ -1,11 +1,25 @@
 """
 Utility functions for processing and normalizing form field data
 """
+import unicodedata
 
 
 # Boolean-like values that open source models may produce
 _TRUE_VARIANTS = {'true', 'yes', '1', 'on', 'checked', 'check', 'selected', 'agree', 'agreed'}
 _FALSE_VARIANTS = {'false', 'no', '0', 'off', 'unchecked', 'uncheck', 'unselected', 'disagree'}
+
+# Non-Latin digit to ASCII mapping (Bengali, Devanagari, Arabic-Indic)
+_DIGIT_MAP = str.maketrans(
+    '০১২৩৪৫৬৭৮৯'   # Bengali
+    '०१२३४५६७८९'   # Devanagari
+    '٠١٢٣٤٥٦٧٨٩',  # Arabic-Indic
+    '0123456789' * 3
+)
+
+
+def _to_ascii_digits(value: str) -> str:
+    """Convert non-Latin numerals to ASCII digits for fields that need them (phone, date, etc.)"""
+    return value.translate(_DIGIT_MAP)
 
 
 def _normalize_bool(value: str) -> str | None:
@@ -49,8 +63,9 @@ def post_process_fields(fields: dict) -> dict:
         if 'email' in key.lower() and isinstance(value, str):
             value = value.lower().replace(' ', '')
         
-        # Clean up phone numbers - also handle 'mobile' in key
+        # Clean up phone numbers - convert non-Latin digits and keep only digits
         elif ('phone' in key.lower() or 'mobile' in key.lower()) and isinstance(value, str):
+            value = _to_ascii_digits(value)
             value = ''.join(filter(str.isdigit, value))
         
         # Normalize gender to lowercase
