@@ -6,8 +6,8 @@
 const CONFIG = {
     // Backend API endpoint
     // Local development: 'http://localhost:8000'
-    // Azure production:  'https://<your-app-name>.azurewebsites.net'
-    BACKEND_URL: 'https://formfiller-backend.azurewebsites.net',
+    // Azure production:  'https://formfiller-backend-dqaehcc5eaevfscs.southindia-01.azurewebsites.net'
+    BACKEND_URL: 'https://formfiller-backend-dqaehcc5eaevfscs.southindia-01.azurewebsites.net',
     
     // API endpoints
     API_ENDPOINTS: {
