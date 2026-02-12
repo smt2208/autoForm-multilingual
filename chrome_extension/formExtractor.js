@@ -7,12 +7,11 @@ function extractFormFields() {
     const formFields = [];
     const seenFields = new Set();
     
-    // Select all form input elements
     const elements = document.querySelectorAll('input, select, textarea');
     
     elements.forEach((element, index) => {
         const type = element.type?.toLowerCase() || 'text';
-        // Skip non-interactive input types
+        // Skip non-fillable input types
         if (type === 'hidden' || type === 'submit' || type === 'button' || type === 'reset' || type === 'image') {
             return;
         }
@@ -26,7 +25,7 @@ function extractFormFields() {
             }
         }
         
-        // --- Group radio buttons by name into a single field ---
+        // --- Group radio buttons by name into a single field with options ---
         if (type === 'radio' && element.name) {
             const groupKey = 'radiogroup_' + element.name;
             if (seenFields.has(groupKey)) return;
@@ -91,9 +90,9 @@ function extractFormFields() {
         const fieldType = element.tagName.toLowerCase() === 'select' ? 'select' : 
                          element.tagName.toLowerCase() === 'textarea' ? 'textarea' : type;
         
+        // Label detection: try label[for], aria-labelledby, parent label, sibling, placeholder, and ancestor container
         let labelText = '';
         
-        // Strategy 1: Check for label with 'for' attribute
         if (element.id) {
             const label = document.querySelector(`label[for="${element.id}"]`);
             if (label) {
@@ -101,7 +100,6 @@ function extractFormFields() {
             }
         }
         
-        // Strategy 2: Check aria-labelledby
         if (!labelText) {
             const ariaLabelledBy = element.getAttribute('aria-labelledby');
             if (ariaLabelledBy) {
@@ -112,7 +110,6 @@ function extractFormFields() {
             }
         }
         
-        // Strategy 3: Check if element is inside a label (extract only text nodes)
         if (!labelText) {
             const parentLabel = element.closest('label');
             if (parentLabel) {
@@ -124,7 +121,6 @@ function extractFormFields() {
             }
         }
         
-        // Strategy 4: Check sibling labels (radio buttons often have labels next to them)
         if (!labelText && (type === 'radio' || type === 'checkbox')) {
             const nextLabel = element.nextElementSibling;
             if (nextLabel && nextLabel.tagName === 'LABEL') {
@@ -132,7 +128,7 @@ function extractFormFields() {
             }
         }
         
-        // Fallback to aria-label, placeholder, or title
+        // Fallback: aria-label, placeholder, title, previous sibling, or ancestor container
         if (!labelText) {
             labelText = element.getAttribute('aria-label') || 
                        element.placeholder || 
@@ -156,7 +152,7 @@ function extractFormFields() {
             }
         }
         
-        // Capture options for select elements (compressed for token efficiency)
+        // Capture options for select elements (truncate large lists to save tokens)
         let options = [];
         if (fieldType === 'select') {
             options = Array.from(element.options)
@@ -177,11 +173,10 @@ function extractFormFields() {
             label: labelText
         };
         
-        // Only include non-empty properties to save tokens
+        // Only include non-empty optional properties to reduce payload size
         if (element.placeholder) fieldInfo.placeholder = element.placeholder;
         if (currentValue && currentValue !== 'unchecked') fieldInfo.currentValue = currentValue;
         
-        // Add options for select elements (truncated for large lists)
         if (options.length > 0) {
             if (options.length > 10) {
                 fieldInfo.options = options.slice(0, 5);
@@ -191,7 +186,6 @@ function extractFormFields() {
             }
         }
         
-        // Mark Select2 fields
         if (element.classList.contains('select2-hidden-accessible')) {
             fieldInfo.isSelect2 = true;
         }

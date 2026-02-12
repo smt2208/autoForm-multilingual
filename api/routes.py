@@ -30,7 +30,6 @@ async def process_audio(
         ProcessResponse with transcribed text and mapped form data
     """
     try:
-        # Parse form data JSON
         try:
             form_data = json.loads(form_data_json) if form_data_json else {}
         except json.JSONDecodeError:
@@ -41,7 +40,6 @@ async def process_audio(
                 message="Invalid JSON in form_data_json"
             )
         
-        # Handle Audio File using tempfile
         original_filename = audio_file.filename or ""
         
         # Determine the extension to help Whisper identify the format
@@ -62,7 +60,6 @@ async def process_audio(
             temp_audio.flush()
             temp_audio.close()
             
-            # Transcribe audio using Whisper
             whisper_service = get_whisper_service()
             transcribed_text = whisper_service.transcribe(temp_file_path)
             
@@ -75,7 +72,6 @@ async def process_audio(
             except Exception as cleanup_error:
                 logger.warning(f"Failed to clean up temporary file {temp_file_path}: {cleanup_error}")
         
-        # Map text to form fields using OpenAI
         openai_service = get_openai_service()
         mapped_form_data = openai_service.map_text_to_fields(
             transcribed_text,

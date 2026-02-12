@@ -81,16 +81,14 @@ function fillFormFields(fieldData) {
         return;
     }
     
-    // Track if we have scrolled to the first element yet
     let hasScrolled = false;
     
     Object.entries(fieldData).forEach(([fieldId, value]) => {
-        // Skip null/undefined/empty values
         if (value === null || value === undefined || value === '' || value === 'null') {
             return;
         }
         
-        // Find the element by various strategies
+        // Find element by id, name, data attributes, or class
         let element = document.getElementById(fieldId) || 
                      document.querySelector(`[name="${fieldId}"]`) ||
                      document.querySelector(`[data-testid="${fieldId}"]`) ||
@@ -99,19 +97,18 @@ function fillFormFields(fieldData) {
                      document.querySelector(`.${fieldId}`);
         
         if (element) {
-            // UX IMPROVEMENT: Only scroll to the FIRST field found.
-            // This prevents the screen from jumping wildly if 10 fields are filled at once.
+            // Scroll to first filled field only
             if (!hasScrolled) {
                 element.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 hasScrolled = true;
             }
 
-            // --- Strategy 1: SELECT (Dropdowns) ---
+            // --- SELECT (Dropdowns) ---
             if (element.tagName.toLowerCase() === 'select') {
                 const options = Array.from(element.options);
                 const valLower = String(value).toLowerCase();
                 
-                // Try exact value match, then text match, then partial text match
+                // Try exact value match, then text match, then partial match
                 let matchingOption = options.find(opt => opt.value.toLowerCase() === valLower);
                 
                 if (!matchingOption) {
@@ -122,12 +119,11 @@ function fillFormFields(fieldData) {
                     matchingOption = options.find(opt => opt.text.toLowerCase().includes(valLower));
                 }
                 
-                // Word-level match: check if value appears as a word in any option
+                // Word-overlap fallback for fuzzy matching
                 if (!matchingOption) {
                     matchingOption = options.find(opt => opt.text.toLowerCase().includes(valLower) || valLower.includes(opt.text.toLowerCase()));
                 }
                 
-                // Fallback: split value into words and find best overlap
                 if (!matchingOption && valLower.length > 2) {
                     const valWords = valLower.split(/\s+/);
                     let bestMatch = null;
@@ -149,7 +145,7 @@ function fillFormFields(fieldData) {
                     element.dispatchEvent(new Event('input', { bubbles: true }));
                 }
             
-            // --- Strategy 2: CHECKBOX & RADIO ---
+            // --- CHECKBOX & RADIO ---
             } else if (element.type === 'checkbox' || element.type === 'radio') {
                 const valStr = String(value).toLowerCase();
                 const isBooleanTrue = valStr === 'yes' || valStr === 'true' || valStr === '1' || valStr === 'on';
@@ -157,12 +153,11 @@ function fillFormFields(fieldData) {
                 
                 let targetElement = element;
                 
-                // Handle groups (radio buttons or checkboxes with same name or class)
+                // Handle groups: resolve target element by matching value or label text
                 if (element.name || element.className) {
-                    // Try name first
                     let group = element.name ? document.querySelectorAll(`input[name="${element.name}"]`) : [];
                     
-                    // If name doesn't work, try class (for cases like class="sagender")
+                    // Fallback to class-based grouping
                     if (group.length <= 1 && element.className) {
                         const classList = element.className.split(' ').filter(c => c && c !== 'option-input' && c !== 'radio' && c !== 'checkbox');
                         for (const cls of classList) {
@@ -177,7 +172,7 @@ function fillFormFields(fieldData) {
                     if (group.length > 1) {
                         let found = false;
                         
-                        // Sub-Strategy A: Check value attribute
+                        // Match by value attribute
                         for (const input of group) {
                             if (input.value.toLowerCase() === valStr) {
                                 targetElement = input;
@@ -186,20 +181,17 @@ function fillFormFields(fieldData) {
                             }
                         }
                         
-                        // Sub-Strategy B: Check associated labels
+                        // Match by associated label text
                         if (!found) {
                             for (const input of group) {
                                 let labelText = '';
-                                // Check for label with 'for' attribute
                                 if (input.id) {
                                     const label = document.querySelector(`label[for="${input.id}"]`);
                                     if (label) labelText = label.textContent.trim().toLowerCase();
                                 }
-                                // Check for next sibling label
                                 if (!labelText && input.nextElementSibling && input.nextElementSibling.tagName === 'LABEL') {
                                     labelText = input.nextElementSibling.textContent.trim().toLowerCase();
                                 }
-                                // Check for parent label
                                 if (!labelText && input.parentElement.tagName === 'LABEL') {
                                     labelText = input.parentElement.textContent.trim().toLowerCase();
                                 }
@@ -216,14 +208,12 @@ function fillFormFields(fieldData) {
 
                 // Apply the change
                 if (isBooleanFalse && element.type === 'checkbox') {
-                    // Only uncheck for checkboxes (radios can't be meaningfully unchecked)
                     if (targetElement.checked) {
                         targetElement.checked = false;
                         targetElement.dispatchEvent(new Event('click', { bubbles: true }));
                         targetElement.dispatchEvent(new Event('change', { bubbles: true }));
                     }
                 } else if (!isBooleanFalse) {
-                    // Check/select the target (works for both radio label match and boolean true)
                     if (!targetElement.checked) {
                         targetElement.checked = true;
                         targetElement.dispatchEvent(new Event('click', { bubbles: true }));
@@ -231,24 +221,17 @@ function fillFormFields(fieldData) {
                     }
                 }
             
-            // --- Strategy 3: TEXT INPUTS & TEXTAREA ---
+            // --- TEXT INPUTS & TEXTAREA ---
             } else {
-                // Special handling for date and time pickers
                 if (element.classList.contains('timepicker') || element.id.includes('time')) {
-                    // Handle time values - ensure proper format (HH:MM or HH:MM:SS)
-                    const timeValue = formatTime(value);
-                    element.value = timeValue || value;
+                    element.value = formatTime(value) || value;
                 } else if (element.id.includes('date') || element.type === 'date') {
-                    // Handle date values - ensure proper format (DD/MM/YYYY or YYYY-MM-DD)
-                    const dateValue = formatDate(value, element.type === 'date');
-                    element.value = dateValue || value;
+                    element.value = formatDate(value, element.type === 'date') || value;
                 } else {
-                    // Standard text input
                     element.value = value;
                 }
                 
-                // Try React/Angular Hack: Use React-compatible setter if available
-                // Many modern frameworks override the native value setter
+                // Use native setter to trigger framework change detection (React, Angular, etc.)
                 const proto = window[element.constructor.name]?.prototype;
                 const nativeSetter = proto ? Object.getOwnPropertyDescriptor(proto, 'value')?.set : null;
                 

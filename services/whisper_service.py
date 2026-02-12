@@ -54,7 +54,6 @@ class WhisperService:
                 language="en"
             )
             
-            # Combine all segments into single text
             transcribed_text = " ".join(segment.text for segment in segments)
             
             logger.info(f"Transcription completed. Detected language: {info.language}")

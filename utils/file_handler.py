@@ -6,6 +6,7 @@ import shutil
 from pathlib import Path
 from typing import Optional
 from config.settings import settings
+from utils.logger import logger
 
 
 class FileHandler:
@@ -47,7 +48,7 @@ class FileHandler:
                 os.remove(file_path)
                 return True
         except Exception as e:
-            print(f"Error deleting file {file_path}: {str(e)}")
+            logger.error(f"Error deleting file {file_path}: {str(e)}")
             return False
         return False
     
@@ -60,4 +61,4 @@ class FileHandler:
                 shutil.rmtree(upload_dir)
                 upload_dir.mkdir(parents=True, exist_ok=True)
         except Exception as e:
-            print(f"Error cleaning up directory: {str(e)}")
+            logger.error(f"Error cleaning up directory: {str(e)}")

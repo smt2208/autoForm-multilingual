@@ -1,4 +1,4 @@
-// Get DOM elements
+// DOM elements
 const startBtn = document.getElementById('startBtn');
 const stopBtn = document.getElementById('stopBtn');
 const statusIndicator = document.getElementById('statusIndicator');
@@ -11,24 +11,15 @@ let mediaRecorder = null;
 let audioChunks = [];
 let audioStream = null;
 
-/**
- * Show error message
- */
 function showError(message) {
     errorDiv.textContent = `Error: ${message}`;
     console.error(message);
 }
 
-/**
- * Clear error message
- */
 function clearError() {
     errorDiv.textContent = '';
 }
 
-/**
- * Update status display
- */
 function updateStatus(text, isActive = false) {
     statusText.textContent = text;
     if (isActive) {
@@ -41,22 +32,18 @@ function updateStatus(text, isActive = false) {
 }
 
 /**
- * Handle Start Recording button click
+ * Start Recording: requests mic access via content script and updates UI
  */
 startBtn.addEventListener('click', async () => {
     clearError();
     
     try {
-        // Get active tab
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-        
-        // Send message to content script to start recording
         const response = await chrome.tabs.sendMessage(tab.id, { action: 'startRecording' });
         
         if (response.error) {
             throw new Error(response.error);
         }
-        
         // Update UI
         startBtn.disabled = true;
         stopBtn.disabled = false;
@@ -70,26 +57,22 @@ startBtn.addEventListener('click', async () => {
 });
 
 /**
- * Handle Stop Recording button click
+ * Stop Recording: hands audio off to background service worker for processing
  */
 stopBtn.addEventListener('click', async () => {
     try {
-        // Get active tab
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
         
-        // Update UI
         startBtn.disabled = false;
         stopBtn.disabled = true;
         updateStatus('Background Processing...', false);
         transcriptDiv.textContent = 'Processing continues in background. You can close this popup.';
         
-        // Send message to content script to stop recording and get audio
         const response = await chrome.tabs.sendMessage(tab.id, { action: 'stopRecording' });
         
         if (response.error) {
             throw new Error(response.error);
         }
-        
         // Hand off to Background Service Worker
         chrome.runtime.sendMessage({
             action: 'PROCESS_AUDIO',
@@ -105,14 +88,13 @@ stopBtn.addEventListener('click', async () => {
 });
 
 /**
- * Check if recording is already in progress
+ * Recover UI state if popup reopens during recording or processing
  */
 async function checkRecordingStatus() {
     try {
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
         if (!tab) return;
         
-        // 1. Check recording status from Content Script
         const response = await chrome.tabs.sendMessage(tab.id, { action: 'getRecordingStatus' });
         if (response && response.isRecording) {
             startBtn.disabled = true;
@@ -122,14 +104,14 @@ async function checkRecordingStatus() {
             return;
         }
 
-        // 2. Check processing status from Background Script
+        // Check processing status from Background Script
         const bgState = await chrome.runtime.sendMessage({ action: 'GET_STATUS' });
         if (bgState) {
             handleStatusUpdate(bgState);
         }
 
     } catch (e) {
-        // Content script might not be loaded yet or other error
+        // Content script may not be loaded yet
         console.log('Could not check recording status:', e);
     }
 }
@@ -142,12 +124,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 function handleStatusUpdate(state) {
-    if (!state) return;
-    
-    // If IDLE, do nothing (unless we want to clear?)
-    if (state.step === 'IDLE') return;
-
-    // Determine UI state
+    if (!state || state.step === 'IDLE') return;
     if (state.step === 'SUCCESS') {
         startBtn.disabled = false;
         stopBtn.disabled = true;
@@ -170,14 +147,4 @@ function handleStatusUpdate(state) {
 // Initial check
 checkRecordingStatus();
 
-/* 
- * Replaced by Background Processing
- */
-// async function processRecordingWithBlob(audioBlobData, tabId) { ... }
-
-
-// processRecordingWithBlob has been moved to background.js
-
-// Log when popup loads
 console.log('FormFiller popup loaded');
-console.log('Backend URL:', CONFIG.BACKEND_URL);

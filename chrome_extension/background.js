@@ -3,14 +3,12 @@
  * Handles communication between popup and content scripts
  */
 
-// Import configuration
 try {
   importScripts('config.js');
 } catch (e) {
   console.error('Failed to import config.js:', e);
 }
 
-// Global State
 let processingState = {
     isProcessing: false,
     step: 'IDLE', // IDLE, ANALYZING, CRAWLING, BRAIN, FILLING, SUCCESS, ERROR
@@ -23,19 +21,13 @@ function updateState(step, message) {
         step,
         message
     };
-    // Broadcast to popup if open
     chrome.runtime.sendMessage({
         action: 'STATUS_UPDATE',
         state: processingState
-    }).catch(() => {
-        // Popup closed, ignore
-    });
+    }).catch(() => {});
 }
 
-// Listen for messages from popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    // console.log('Background received message:', request.action);
-    
     if (request.action === 'GET_STATUS') {
         sendResponse(processingState);
     }
@@ -55,28 +47,24 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         handleAudioProcessing(request.audioBlobData, request.tabId)
             .then(result => sendResponse({ success: true, result }))
             .catch(error => sendResponse({ success: false, error: error.message }));
-        return true; // Keep channel open for async response
+        return true; // async response
     }
 });
 
 /**
- * Handle the full processing flow in the background
- * This survives popup closure.
+ * Handle the full audio-to-form-fill pipeline in the background.
+ * Runs in the service worker so it survives popup closure.
  */
 async function handleAudioProcessing(audioBlobData, tabId) {
-    console.log('Starting background processing for tab:', tabId);
     
     try {
         updateState('ANALYZING', '🔍 Analyzing your voice...');
-        await new Promise(resolve => setTimeout(resolve, 1500)); // Show for 1.5s
+        await new Promise(resolve => setTimeout(resolve, 1500));
         
-        // 1. Convert base64/dataURL to blob
         const audioBlob = await (await fetch(audioBlobData)).blob();
         
-        // 2. Extract form fields from the page
-        console.log('Extracting form fields...');
         updateState('CRAWLING', '🐛 Crawling through the form...');
-        await new Promise(resolve => setTimeout(resolve, 2000)); // Show for 2s
+        await new Promise(resolve => setTimeout(resolve, 2000));
         
         const response = await chrome.tabs.sendMessage(tabId, { action: 'extractFields' });
         const formFields = response.fields;
@@ -85,17 +73,12 @@ async function handleAudioProcessing(audioBlobData, tabId) {
             throw new Error('No form fields found on this page');
         }
         
-        console.log(`Found ${formFields.length} fields.`);
-        
-        // 3. Prepare FormData
         const formData = new FormData();
         formData.append('audio_file', audioBlob, 'recording.webm');
         formData.append('form_data_json', JSON.stringify({ fields: formFields }));
         
-        // 4. Send to backend
-        console.log('Sending to AI backend...');
         updateState('BRAIN', '🧠 Activating AI brain & Supercharging intelligence...');
-        await new Promise(resolve => setTimeout(resolve, 2500)); // Show for 2.5s
+        await new Promise(resolve => setTimeout(resolve, 2500));
         
         const backendUrl = CONFIG.BACKEND_URL + CONFIG.API_ENDPOINTS.process;
         
@@ -114,10 +97,8 @@ async function handleAudioProcessing(audioBlobData, tabId) {
             throw new Error(result.message || 'Backend processing failed');
         }
         
-        // 5. Fill form fields
-        console.log('Filling form with data:', result.form_data);
         updateState('FILLING', '✏️ Precision filling in progress...');
-        await new Promise(resolve => setTimeout(resolve, 2000)); // Show for 2s
+        await new Promise(resolve => setTimeout(resolve, 2000));
         
         try {
             await chrome.tabs.sendMessage(tabId, {
@@ -125,17 +106,15 @@ async function handleAudioProcessing(audioBlobData, tabId) {
                 data: result.form_data
             });
         } catch (fillError) {
-            console.error('Standard fill failed, trying scripting injection:', fillError);
-            // Fallback: inject script directly
+            // Fallback: inject script directly if content script messaging fails
             await chrome.scripting.executeScript({
                 target: { tabId: tabId },
                 func: (data) => {
-                    console.log('Direct fill with data:', data);
                     Object.entries(data).forEach(([fieldId, value]) => {
                         if (!value) return;
                         const element = document.getElementById(fieldId) || document.querySelector(`[name="${fieldId}"]`);
                         if (element) {
-                             // React hack for valued inputs
+                            // Use native setters to trigger React/Angular change detection
                             const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
                             const nativeTextAreaValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
                             
@@ -156,19 +135,16 @@ async function handleAudioProcessing(audioBlobData, tabId) {
             });
         }
         
-        console.log('Processing completed successfully.');
         updateState('SUCCESS', '🎉 All fields filled perfectly!');
         
         return result;
 
     } catch (error) {
-        console.error('Background processing failed:', error);
         updateState('ERROR', `Error: ${error.message}`);
         throw error;
     }
 }
 
-// Log when service worker activates
 chrome.runtime.onInstalled.addListener(() => {
     console.log('FormFiller extension installed');
 });
