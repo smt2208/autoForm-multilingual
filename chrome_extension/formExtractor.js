@@ -72,6 +72,12 @@ function extractFormFields() {
             if (style.display === 'none' || style.visibility === 'hidden' || element.offsetParent === null) {
                 return;
             }
+        } else if (element.offsetParent === null) {
+            // Select2 hides the original <select> (position:absolute, clip:rect)
+            // so its own display/visibility is fine — but if an ANCESTOR has
+            // display:none (e.g. a ".hide" conditional container), offsetParent
+            // becomes null and we should skip the field.
+            return;
         }
         
         // --- Group radio buttons by name into a single field with options ---
