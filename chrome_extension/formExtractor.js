@@ -3,6 +3,47 @@
  * Handles extraction of form fields from the current webpage
  */
 
+/**
+ * Walk up the DOM tree and return true if the element lives inside a
+ * collapsed / hidden accordion panel, tab-panel, or similar container.
+ * Covers Bootstrap 3 (.collapse without .in), Bootstrap 4/5 (.collapse
+ * without .show), ARIA aria-expanded="false", and generic height:0 +
+ * overflow:hidden containers.
+ */
+function isInsideCollapsedSection(element) {
+    let ancestor = element.parentElement;
+    while (ancestor && ancestor !== document.body) {
+        // Bootstrap 3 collapsed panel  (has .collapse but NOT .in)
+        // Bootstrap 4/5 collapsed panel (has .collapse but NOT .show)
+        if (
+            ancestor.classList.contains('collapse') &&
+            !ancestor.classList.contains('in') &&
+            !ancestor.classList.contains('show')
+        ) {
+            return true;
+        }
+
+        // ARIA accordion / tab pattern
+        if (ancestor.getAttribute('aria-expanded') === 'false') {
+            return true;
+        }
+
+        // Generic CSS accordion trick (height:0 + overflow:hidden)
+        const cs = window.getComputedStyle(ancestor);
+        if (cs.height === '0px' && cs.overflow === 'hidden') {
+            return true;
+        }
+
+        // Hidden tab-panel (display:none toggled by tab JS)
+        if (ancestor.getAttribute('role') === 'tabpanel' && cs.display === 'none') {
+            return true;
+        }
+
+        ancestor = ancestor.parentElement;
+    }
+    return false;
+}
+
 function extractFormFields() {
     const formFields = [];
     const seenFields = new Set();
@@ -13,6 +54,14 @@ function extractFormFields() {
         const type = element.type?.toLowerCase() || 'text';
         // Skip non-fillable input types
         if (type === 'hidden' || type === 'submit' || type === 'button' || type === 'reset' || type === 'image') {
+            return;
+        }
+
+        // ── Skip fields inside collapsed accordion sections / hidden tabs ──
+        // Only fields in the currently visible/expanded panel are extracted,
+        // so the LLM never sees duplicate Nationality / District / Name fields
+        // from other accordion sections.
+        if (isInsideCollapsedSection(element)) {
             return;
         }
         
@@ -121,7 +170,7 @@ function extractFormFields() {
             }
         }
         
-        if (!labelText && (type === 'radio' || type === 'checkbox')) {
+        if (!labelText && type === 'checkbox') {
             const nextLabel = element.nextElementSibling;
             if (nextLabel && nextLabel.tagName === 'LABEL') {
                 labelText = nextLabel.textContent.trim();
