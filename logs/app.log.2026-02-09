@@ -1,0 +1,17 @@
+2026-02-09 22:03:22 - FormFiller - INFO - Starting FormFiller server...
+2026-02-09 22:03:22 - FormFiller - INFO - Server will run at http://0.0.0.0:8000
+2026-02-09 22:03:22 - FormFiller - INFO - API documentation available at http://0.0.0.0:8000/docs
+2026-02-09 22:03:24 - FormFiller - INFO - Initializing AI models...
+2026-02-09 22:03:24 - FormFiller - INFO - Loading Whisper model: medium
+2026-02-09 22:03:30 - FormFiller - INFO - Whisper model loaded successfully
+2026-02-09 22:03:30 - FormFiller - INFO - No OpenAI API key found, loading Ollama model: ministral-3:3b...
+2026-02-09 22:03:30 - FormFiller - INFO - Ollama model loaded successfully
+2026-02-09 22:03:30 - FormFiller - INFO - AI models initialized successfully
+2026-02-09 22:04:28 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpoeqabnqj.webm
+2026-02-09 22:04:28 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpoeqabnqj.webm
+2026-02-09 22:04:32 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-09 22:04:32 - FormFiller - DEBUG - Transcribed text:  First name is Shyam, middle name is Mohan, last name is Tripathi, guardian name is XYZ,  age is 50, address is MB, email is XYZ, gender is male.
+2026-02-09 22:04:32 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpoeqabnqj.webm
+2026-02-09 22:04:32 - FormFiller - INFO - Processing transcription:  First name is Shyam, middle name is Mohan, last n...
+2026-02-09 22:04:32 - FormFiller - INFO - Triggering the chain...
+2026-02-09 22:04:36 - FormFiller - ERROR - Error during field mapping: [WinError 10061] No connection could be made because the target machine actively refused it

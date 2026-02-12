@@ -1,0 +1,82 @@
+2026-01-22 19:33:21 - FormFiller - INFO - Starting FormFiller server...
+2026-01-22 19:33:21 - FormFiller - INFO - Server will run at http://0.0.0.0:8000
+2026-01-22 19:33:21 - FormFiller - INFO - API documentation available at http://0.0.0.0:8000/docs
+2026-01-22 19:33:23 - FormFiller - INFO - Initializing AI models...
+2026-01-22 19:33:23 - FormFiller - INFO - Loading Whisper model: medium
+2026-01-22 19:33:30 - FormFiller - INFO - Whisper model loaded successfully
+2026-01-22 19:33:30 - FormFiller - INFO - No OpenAI API key found, loading Ollama model: ministral-3:3b...
+2026-01-22 19:33:30 - FormFiller - INFO - Ollama model loaded successfully
+2026-01-22 19:33:30 - FormFiller - INFO - AI models initialized successfully
+2026-01-22 19:33:46 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpiih11wap.webm
+2026-01-22 19:33:46 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpiih11wap.webm
+2026-01-22 19:33:46 - FormFiller - ERROR - Error during transcription: [Errno 541478725] End of file: 'C:\\Users\\User\\AppData\\Local\\Temp\\tmpiih11wap.webm'
+2026-01-22 19:33:46 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpiih11wap.webm
+2026-01-22 19:33:46 - FormFiller - ERROR - Error in process endpoint: [Errno 541478725] End of file: 'C:\\Users\\User\\AppData\\Local\\Temp\\tmpiih11wap.webm'
+2026-01-22 19:34:13 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmp0rr1678j.webm
+2026-01-22 19:34:13 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmp0rr1678j.webm
+2026-01-22 19:34:15 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-01-22 19:34:15 - FormFiller - DEBUG - Transcribed text:  Case rate is 20 October 2025, P&S section is 50, direct arms act.
+2026-01-22 19:34:15 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmp0rr1678j.webm
+2026-01-22 19:34:15 - FormFiller - INFO - Processing transcription:  Case rate is 20 October 2025, P&S section is 50, ...
+2026-01-22 19:34:15 - FormFiller - INFO - Triggering the chain...
+2026-01-22 19:34:19 - FormFiller - ERROR - Error during field mapping: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-01-22 19:35:22 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmp4rpnwas1.webm
+2026-01-22 19:35:22 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmp4rpnwas1.webm
+2026-01-22 19:35:24 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-01-22 19:35:24 - FormFiller - DEBUG - Transcribed text:  Gage date is 20 October 2025. P&S section is 50. Select arms act.
+2026-01-22 19:35:24 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmp4rpnwas1.webm
+2026-01-22 19:35:24 - FormFiller - INFO - Processing transcription:  Gage date is 20 October 2025. P&S section is 50. ...
+2026-01-22 19:35:24 - FormFiller - INFO - Triggering the chain...
+2026-01-22 19:35:29 - FormFiller - ERROR - Error during field mapping: model requires more system memory (8.6 GiB) than is available (4.7 GiB) (status code: 500)
+2026-01-22 19:44:40 - FormFiller - INFO - Initializing AI models...
+2026-01-22 19:44:40 - FormFiller - INFO - Loading Whisper model: medium
+2026-01-22 19:44:47 - FormFiller - INFO - Whisper model loaded successfully
+2026-01-22 19:44:47 - FormFiller - INFO - No OpenAI API key found, loading Ollama model: ministral-3:3b...
+2026-01-22 19:44:47 - FormFiller - INFO - Ollama model loaded successfully
+2026-01-22 19:44:47 - FormFiller - INFO - AI models initialized successfully
+2026-01-22 19:51:36 - FormFiller - INFO - Initializing AI models...
+2026-01-22 19:51:36 - FormFiller - INFO - Loading Whisper model: tiny
+2026-01-22 19:51:57 - FormFiller - INFO - Starting FormFiller server...
+2026-01-22 19:51:57 - FormFiller - INFO - Server will run at http://0.0.0.0:8000
+2026-01-22 19:51:57 - FormFiller - INFO - API documentation available at http://0.0.0.0:8000/docs
+2026-01-22 19:51:59 - FormFiller - INFO - Initializing AI models...
+2026-01-22 19:51:59 - FormFiller - INFO - Loading Whisper model: tiny
+2026-01-22 19:52:06 - FormFiller - INFO - Whisper model loaded successfully
+2026-01-22 19:52:06 - FormFiller - INFO - No OpenAI API key found, loading Ollama model: ministral-3:3b...
+2026-01-22 19:52:06 - FormFiller - INFO - Ollama model loaded successfully
+2026-01-22 19:52:06 - FormFiller - INFO - AI models initialized successfully
+2026-01-22 19:53:04 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpv1girzdq.webm
+2026-01-22 19:53:04 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpv1girzdq.webm
+2026-01-22 19:53:06 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-01-22 19:53:06 - FormFiller - DEBUG - Transcribed text:  So, this is 20 up to 20, 25, and the section is 50, select arms, etc.
+2026-01-22 19:53:06 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpv1girzdq.webm
+2026-01-22 19:53:06 - FormFiller - INFO - Processing transcription:  So, this is 20 up to 20, 25, and the section is 5...
+2026-01-22 19:53:06 - FormFiller - INFO - Triggering the chain...
+2026-01-22 19:53:10 - FormFiller - ERROR - Error during field mapping: model requires more system memory (7.7 GiB) than is available (7.0 GiB) (status code: 500)
+2026-01-22 19:55:39 - FormFiller - INFO - Starting FormFiller server...
+2026-01-22 19:55:39 - FormFiller - INFO - Server will run at http://0.0.0.0:8000
+2026-01-22 19:55:39 - FormFiller - INFO - API documentation available at http://0.0.0.0:8000/docs
+2026-01-22 19:55:41 - FormFiller - INFO - Initializing AI models...
+2026-01-22 19:55:41 - FormFiller - INFO - Loading Whisper model: medium
+2026-01-22 19:55:47 - FormFiller - INFO - Whisper model loaded successfully
+2026-01-22 19:55:47 - FormFiller - INFO - No OpenAI API key found, loading Ollama model: ministral-3:3b...
+2026-01-22 19:55:47 - FormFiller - INFO - Ollama model loaded successfully
+2026-01-22 19:55:47 - FormFiller - INFO - AI models initialized successfully
+2026-01-22 19:56:21 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpltm_lvcc.webm
+2026-01-22 19:56:21 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpltm_lvcc.webm
+2026-01-22 19:56:23 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-01-22 19:56:23 - FormFiller - DEBUG - Transcribed text:  Case date is 20 October 2025. BNS section is 50. Select Arms Act. Section is 50.
+2026-01-22 19:56:23 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpltm_lvcc.webm
+2026-01-22 19:56:23 - FormFiller - INFO - Processing transcription:  Case date is 20 October 2025. BNS section is 50. ...
+2026-01-22 19:56:23 - FormFiller - INFO - Triggering the chain...
+2026-01-22 19:58:29 - FormFiller - INFO - Raw parsed data: {'ipc_bns': 'unchecked', 'BNS': 'checked', 'case_no': '50', 'case_date': '২০২৫-১০-২০', 'Case Date': '২০/১০/২০২৫', 'ipsection': '৫০', 'case_actname': 'Arms Act, 1959', 'case_act': '৫০'}
+2026-01-22 19:58:29 - FormFiller - INFO - Final Mapped Data: {'ipc_bns': 'unchecked', 'BNS': 'checked', 'case_no': '50', 'case_date': '২০২৫-১০-২০', 'Case Date': '২০/১০/২০২৫', 'ipsection': '৫০', 'case_actname': 'Arms Act, 1959', 'case_act': '৫০'}
+2026-01-22 19:59:09 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpk590xfdb.webm
+2026-01-22 19:59:09 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpk590xfdb.webm
+2026-01-22 19:59:10 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-01-22 19:59:10 - FormFiller - DEBUG - Transcribed text:  Case date is 20 October 2025, BNS section is 50, select Arms Act.
+2026-01-22 19:59:10 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpk590xfdb.webm
+2026-01-22 19:59:10 - FormFiller - INFO - Processing transcription:  Case date is 20 October 2025, BNS section is 50, ...
+2026-01-22 19:59:10 - FormFiller - INFO - Triggering the chain...
+2026-01-22 20:00:01 - FormFiller - INFO - Raw parsed data: {'case_date': '২১/১০/২০২৫', 'ipsection': '৫০', 'case_actname': 'Arms Act, 1959'}
+2026-01-22 20:00:01 - FormFiller - INFO - Final Mapped Data: {'case_date': '২১/১০/২০২৫', 'ipsection': '৫০', 'case_actname': 'Arms Act, 1959'}

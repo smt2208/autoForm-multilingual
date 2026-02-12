@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "FormFiller - Voice Form Automation",
+  "version": "0.1.0",
+  "description": "Privacy-first AI agent that automates web form filling using voice commands",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://localhost:8000/*",
+    "https://localhost:8000/*",
+    "<all_urls>"
+  ],
+  "icons": {
+    "16": "images/icon.png",
+    "48": "images/icon.png",
+    "128": "images/icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "FormFiller",
+    "default_icon": {
+        "16": "images/icon.png",
+        "48": "images/icon.png",
+        "128": "images/icon.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>", "file://*/*"],
+      "js": ["content_loader.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content_script.js",
+        "formExtractor.js",
+        "formFiller.js",
+        "audioRecorder.js"
+      ],
+      "matches": ["<all_urls>", "file://*/*"]
+    }
+  ]
+}
