@@ -56,6 +56,8 @@ Imagine you have a long web form — maybe a police case registration form with 
 
 It works in **any language** — English, Bengali (বাংলা), Hindi, and more. If you speak in Bengali, the form gets filled in Bengali script.
 
+**Smart handling of complex multi-section forms:** If your form uses collapsible accordion panels (e.g., "Case Details", "Arrest Details", "Victim Details"), the system intelligently extracts only the fields from the section you're currently viewing, preventing confusion from duplicate field names across sections.
+
 ---
 
 ## 2. High-Level Architecture
@@ -139,6 +141,7 @@ The user speaks naturally: *"My name is Raju Das, father's name Gopal Das, age 3
 - `background.js` sends a message to `content_script.js` in the active tab: `{ action: 'extractFields' }`.
 - `content_script.js` calls `extractFormFields()` from `formExtractor.js`.
 - This function **scans the entire DOM** of the web page and extracts every fillable form field — inputs, selects, textareas, radio buttons, checkboxes — along with their IDs, names, types, labels, placeholder text, current values, and dropdown options.
+- **Smart accordion detection**: If the form uses collapsible accordion panels (like Bootstrap collapse), only fields from the **currently visible/expanded section** are extracted. This prevents duplicate field names across sections (e.g., multiple "Nationality" fields in "Case Details", "Arrest Details", "Victim Details") from confusing the AI.
 - The extracted field data (a JSON array) is sent back to `background.js`.
 
 ### Step 8: Audio + Form Fields are Sent to the Backend
@@ -980,7 +983,58 @@ if (type === 'hidden' || type === 'submit' || type === 'button' || type === 'res
 ```
 - Skips elements that users don't fill: hidden fields, submit buttons, reset buttons, image inputs.
 
-#### Step 3: Skip Hidden Elements (with Select2 Exception)
+#### Step 3: Skip Fields Inside Collapsed Accordion Sections
+```javascript
+if (isInsideCollapsedSection(element)) {
+    return; // Skip fields in collapsed panels
+}
+```
+**This is a critical optimization for multi-section forms with accordion panels** (like police SIT-REP forms).
+
+Many complex forms use Bootstrap accordion panels or collapsible sections to organize related fields:
+- Case Details (expanded)
+- Specific Arrest Details (collapsed)
+- Preventive Arrest Details (collapsed)
+- Warrant of Arrest Details (collapsed)
+- Seizure Details (collapsed)
+- etc.
+
+Without this check, the extractor would send **all fields from all sections** (both expanded and collapsed) to the LLM — causing duplicate field names like `nationality`, `district`, `first_name` from multiple sections, confusing the AI mapping.
+
+**The `isInsideCollapsedSection()` helper function:**
+```javascript
+function isInsideCollapsedSection(element) {
+    let ancestor = element.parentElement;
+    while (ancestor && ancestor !== document.body) {
+        // Bootstrap 3: .collapse without .in
+        // Bootstrap 4/5: .collapse without .show
+        if (ancestor.classList.contains('collapse') &&
+            !ancestor.classList.contains('in') &&
+            !ancestor.classList.contains('show')) {
+            return true;
+        }
+        // ARIA accordion pattern
+        if (ancestor.getAttribute('aria-expanded') === 'false') {
+            return true;
+        }
+        // Generic CSS accordion (height:0 + overflow:hidden)
+        const cs = window.getComputedStyle(ancestor);
+        if (cs.height === '0px' && cs.overflow === 'hidden') {
+            return true;
+        }
+        // Hidden tab panels
+        if (ancestor.getAttribute('role') === 'tabpanel' && cs.display === 'none') {
+            return true;
+        }
+        ancestor = ancestor.parentElement;
+    }
+    return false;
+}
+```
+
+**Result:** Only fields from the **currently visible/expanded accordion section** are extracted and sent to the LLM. If the user has "Specific Arrest" panel expanded and says "accused name is Ram Kumar, nationality Indian", the LLM only sees `arrest_fname`, `arrest_nationality` (not complainant/victim fields from other collapsed sections), making field mapping unambiguous and extremely accurate.
+
+#### Step 4: Skip Hidden Elements (with Select2 Exception)
 ```javascript
 const style = window.getComputedStyle(element);
 const isSelect2Hidden = element.classList.contains('select2-hidden-accessible');
@@ -988,12 +1042,18 @@ if (!isSelect2Hidden) {
     if (style.display === 'none' || style.visibility === 'hidden' || element.offsetParent === null) {
         return;
     }
+} else if (element.offsetParent === null) {
+    // Select2 fields: their own visibility is fine (they're styled as hidden),
+    // but if an ANCESTOR has display:none (e.g., conditional field in a .hide
+    // container), offsetParent becomes null and we should skip the field.
+    return;
 }
 ```
 - Uses `getComputedStyle()` to check if the element is visually hidden.
 - **Select2 exception**: Select2 is a popular jQuery plugin that replaces `<select>` dropdowns with custom styled versions. It hides the original `<select>` element (adds class `select2-hidden-accessible`) but we still need to read its options. So we don't skip these.
+- **Select2 ancestor check**: However, if a Select2 dropdown is inside a `class="hide"` conditional container (e.g., a field that only appears when a checkbox is checked), we check `offsetParent === null` to catch this case and skip it.
 
-#### Step 4: Group Radio Buttons by Name
+#### Step 5: Group Radio Buttons by Name
 ```javascript
 if (type === 'radio' && element.name) {
     const groupKey = 'radiogroup_' + element.name;
@@ -1022,7 +1082,7 @@ if (type === 'radio' && element.name) {
 - The label for each option is found by checking (in order): `<label for="radioId">`, next sibling `<label>`, parent `<label>`.
 - This is crucial so the AI knows the available choices and can output the correct option label.
 
-#### Step 5: Generate Unique Field IDs
+#### Step 6: Generate Unique Field IDs
 ```javascript
 const fieldId = element.id || 
                element.name || 
@@ -1036,7 +1096,7 @@ const fieldId = element.id ||
 - `data-testid` and `data-automation-id` are common in React/Angular apps.
 - `seenFields` set prevents duplicates.
 
-#### Step 6: Detect Labels (Multi-Strategy)
+#### Step 7: Detect Labels (Multi-Strategy)
 This is the most sophisticated part. The label text tells the AI what data the field expects. The extractor tries **7 different strategies** in order:
 
 ```javascript
@@ -1073,7 +1133,7 @@ const parent = element.closest('div[class*="field"], div[class*="form-group"], d
 
 This multi-strategy approach works on virtually any website, whether it follows HTML best practices or not.
 
-#### Step 7: Extract Select Options
+#### Step 8: Extract Select Options
 ```javascript
 if (fieldType === 'select') {
     options = Array.from(element.options)
@@ -1084,7 +1144,7 @@ if (fieldType === 'select') {
 - For dropdown `<select>` elements, extracts all option texts.
 - **Token optimization**: If there are more than 10 options, only the first 5 are sent (to save API tokens), but the total `optionCount` is included.
 
-#### Step 8: Build the Field Object
+#### Step 9: Build the Field Object
 ```javascript
 const fieldInfo = {
     id: fieldId,           // Unique identifier to find the element later
@@ -1490,8 +1550,19 @@ For each <input>, <select>, <textarea> on the page:
 │
 ├── Is type hidden/submit/button/reset/image? → SKIP
 │
+├── Is element inside a collapsed accordion section?
+│   ├── Check ancestor elements for:
+│   │   ├── Bootstrap: class="collapse" without "in" (BS3) or "show" (BS4/5)
+│   │   ├── ARIA: aria-expanded="false"
+│   │   ├── CSS: height=0px + overflow=hidden
+│   │   └── Tab panels: role="tabpanel" + display=none
+│   └── If YES → SKIP (only extract fields from visible/expanded sections)
+│
 ├── Is element visually hidden?
-│   ├── Yes, but has class "select2-hidden-accessible" → CONTINUE (it's a Select2 dropdown)
+│   ├── Yes, but has class "select2-hidden-accessible":
+│   │   ├── Check if ancestor container is hidden (offsetParent === null)
+│   │   ├── If hidden ancestor → SKIP
+│   │   └── Otherwise → CONTINUE (it's a visible Select2 dropdown)
 │   └── Yes, and it's not Select2 → SKIP
 │
 ├── Is it a radio button with a name attribute?
@@ -1684,6 +1755,7 @@ The system supports multilingual form filling at every stage:
 - **React/Angular/Vue forms**: Native setter + event dispatching ensures compatibility.
 - **Non-Latin digits in numeric fields**: Converted to ASCII on both backend and frontend.
 - **User didn't mention some fields**: GPT only returns mentioned fields, empty fields are skipped.
+- **Multi-section accordion forms**: Only fields from the currently visible/expanded accordion panel are extracted, preventing duplicate field name conflicts (e.g., multiple `nationality` fields across "Case Details", "Arrest Details", "Victim Details" sections). Supports Bootstrap 3/4/5 collapse, ARIA patterns, and generic CSS accordions.
 
 ---
 
