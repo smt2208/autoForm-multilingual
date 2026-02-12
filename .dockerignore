@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.git/
+.gitignore
+.env
+*.md
+LICENSE
+logs/
+temp_uploads/
+chrome_extension/
+assets/
+feilds.md
+.github/
+*.log
