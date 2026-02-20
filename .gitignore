@@ -204,3 +204,4 @@ cython_debug/
 # Cache directories
 models/whisper_cache/
 temp_uploads/
+desktop.ini
