@@ -48,7 +48,7 @@ startBtn.addEventListener('click', async () => {
         startBtn.disabled = true;
         stopBtn.disabled = false;
         updateStatus('Recording...', true);
-        transcriptDiv.textContent = 'Listening to your voice...';
+        transcriptDiv.textContent = 'Listening... Speak now.';
         
     } catch (error) {
         showError(`Failed to start recording: ${error.message}`);
@@ -66,7 +66,7 @@ stopBtn.addEventListener('click', async () => {
         startBtn.disabled = false;
         stopBtn.disabled = true;
         updateStatus('Background Processing...', false);
-        transcriptDiv.textContent = 'Processing continues in background. You can close this popup.';
+        transcriptDiv.textContent = 'Processing in progress. This popup can be closed safely.';
         
         const response = await chrome.tabs.sendMessage(tab.id, { action: 'stopRecording' });
         
@@ -112,7 +112,6 @@ async function checkRecordingStatus() {
 
     } catch (e) {
         // Content script may not be loaded yet
-        console.log('Could not check recording status:', e);
     }
 }
 
@@ -146,5 +145,3 @@ function handleStatusUpdate(state) {
 
 // Initial check
 checkRecordingStatus();
-
-console.log('FormFiller popup loaded');

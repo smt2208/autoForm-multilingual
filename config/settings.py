@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     WHISPER_DEVICE: str = os.getenv("WHISPER_DEVICE", "cpu")
 
     GOOGLE_API_KEY: Any = os.getenv("GOOGLE_API_KEY", None)
-    GOOGLE_MODEL: str = os.getenv("GOOGLE_MODEL", "gemma-3-12b-it")
+    GOOGLE_MODEL: str = os.getenv("GOOGLE_MODEL", "gemini-3.1-flash-lite-preview")
     
     class Config:
         env_file = ".env"

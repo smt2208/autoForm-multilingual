@@ -49,13 +49,13 @@ class GeminiService:
             if self.model is None:
                 raise RuntimeError("Model is not initialized")
             
-            logger.info(f"Processing transcription: {transcribed_text[:50]}...")
+            logger.debug(f"Processing transcription: {transcribed_text[:50]}...")
             
             prompt_template, parser = get_form_mapping_prompt()
 
             chain = prompt_template | self.model | parser
             
-            logger.info("Triggering the chain...")
+            logger.debug("Invoking LLM chain...")
             parsed_response = chain.invoke({
                 "fields_json": fields_json, 
                 "transcribed_text": transcribed_text
@@ -70,11 +70,11 @@ class GeminiService:
             else:
                 mapped_data = {}
             
-            logger.info(f"Raw parsed data: {mapped_data}")
+            logger.debug(f"Raw parsed data: {mapped_data}")
 
             final_data = post_process_fields(mapped_data)
             
-            logger.info(f"Final Mapped Data: {final_data}")
+            logger.debug(f"Final mapped data: {final_data}")
             return final_data
             
         except Exception as e:

@@ -33,13 +33,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
     
     if (request.action === 'startRecording') {
-        console.log('Starting recording command received');
         updateState('IDLE', ''); // Reset previous state
         sendResponse({ status: 'ack' });
     }
     
     if (request.action === 'stopRecording') {
-        console.log('Stopping recording command received');
         sendResponse({ status: 'ack' });
     }
     
@@ -58,12 +56,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 async function handleAudioProcessing(audioBlobData, tabId) {
     
     try {
-        updateState('ANALYZING', '🔍 Analyzing your voice...');
+        updateState('ANALYZING', 'Processing audio input...');
         await new Promise(resolve => setTimeout(resolve, 1500));
         
         const audioBlob = await (await fetch(audioBlobData)).blob();
         
-        updateState('CRAWLING', '🐛 Crawling through the form...');
+        updateState('CRAWLING', 'Extracting form fields from page...');
         await new Promise(resolve => setTimeout(resolve, 2000));
         
         const response = await chrome.tabs.sendMessage(tabId, { action: 'extractFields' });
@@ -77,7 +75,7 @@ async function handleAudioProcessing(audioBlobData, tabId) {
         formData.append('audio_file', audioBlob, 'recording.webm');
         formData.append('form_data_json', JSON.stringify({ fields: formFields }));
         
-        updateState('BRAIN', '🧠 Activating AI brain & Supercharging intelligence...');
+        updateState('BRAIN', 'Sending data to AI for analysis...');
         await new Promise(resolve => setTimeout(resolve, 2500));
         
         const backendUrl = CONFIG.BACKEND_URL + CONFIG.API_ENDPOINTS.process;
@@ -97,7 +95,7 @@ async function handleAudioProcessing(audioBlobData, tabId) {
             throw new Error(result.message || 'Backend processing failed');
         }
         
-        updateState('FILLING', '✏️ Precision filling in progress...');
+        updateState('FILLING', 'Populating form fields...');
         await new Promise(resolve => setTimeout(resolve, 2000));
         
         try {
@@ -135,7 +133,7 @@ async function handleAudioProcessing(audioBlobData, tabId) {
             });
         }
         
-        updateState('SUCCESS', '🎉 All fields filled perfectly!');
+        updateState('SUCCESS', 'Form fields have been filled successfully.');
         
         return result;
 
@@ -145,6 +143,4 @@ async function handleAudioProcessing(audioBlobData, tabId) {
     }
 }
 
-chrome.runtime.onInstalled.addListener(() => {
-    console.log('FormFiller extension installed');
-});
+chrome.runtime.onInstalled.addListener(() => {});
