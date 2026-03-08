@@ -1,37 +1,37 @@
 """
-OpenAI service for form field mapping
+Gemini service for form field mapping
 """
 from config.settings import settings
 from dotenv import load_dotenv
 from config.prompts import get_form_mapping_prompt
 from utils.logger import logger
 from utils.field_processor import post_process_fields
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 
-class OpenAIService:
-    """Service for OpenAI-based form field mapping"""
+class GeminiService:
+    """Service for Gemini-based form field mapping"""
 
     def __init__(self):
-        """Initialize OpenAI LLM"""
+        """Initialize Google LLM"""
         self.model = None
         self._load_model()
         load_dotenv()
 
     def _load_model(self) -> None:
-        """Load the OpenAI model"""
+        """Load the Google model"""
         try:
-            if not settings.OPENAI_API_KEY or not settings.OPENAI_API_KEY.strip():
-                raise ValueError("OpenAI API key is required")
+            if not settings.GOOGLE_API_KEY or not settings.GOOGLE_API_KEY.strip():
+                raise ValueError("Google API key is required")
 
-            logger.info("Loading OpenAI model...")
-            self.model = ChatOpenAI(
-                model=settings.OPENAI_MODEL,
-                temperature=0.2
+            logger.info("Loading Google model...")
+            self.model = ChatGoogleGenerativeAI(
+                model=settings.GOOGLE_MODEL,
+                temperature=0.7
             )
-            logger.info("OpenAI model loaded successfully")
+            logger.info("Google model loaded successfully")
         except Exception as e:
-            logger.error(f"Error loading OpenAI model: {str(e)}")
+            logger.error(f"Error loading Google model: {str(e)}")
             raise
     
     def map_text_to_fields(self, transcribed_text: str, fields_json: str) -> dict:
@@ -83,10 +83,10 @@ class OpenAIService:
 
 
 # Singleton instance
-_openai_service = None
+_gemini_service = None
 
-def get_openai_service() -> OpenAIService:
-    global _openai_service
-    if _openai_service is None:
-        _openai_service = OpenAIService()
-    return _openai_service
+def get_gemini_service() -> GeminiService:
+    global _gemini_service
+    if _gemini_service is None:
+        _gemini_service = GeminiService()
+    return _gemini_service

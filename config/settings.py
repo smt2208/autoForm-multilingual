@@ -28,6 +28,9 @@ class Settings(BaseSettings):
 
     OPENAI_API_KEY: Any = os.getenv("OPENAI_API_KEY", None)
     OPENAI_MODEL: str = "gpt-4.1-2025-04-14"
+
+    GOOGLE_API_KEY: Any = os.getenv("GOOGLE_API_KEY", None)
+    GOOGLE_MODEL: str = os.getenv("GOOGLE_MODEL", "gemma-3-12b-it")
     
     class Config:
         env_file = ".env"

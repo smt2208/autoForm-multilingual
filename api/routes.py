@@ -7,7 +7,7 @@ import tempfile
 import shutil
 import os
 from services.whisper_service import get_whisper_service
-from services.openai_service import get_openai_service
+from services.gemini_service import get_gemini_service
 from utils.logger import logger
 from models.models import ProcessResponse
 
@@ -72,8 +72,8 @@ async def process_audio(
             except Exception as cleanup_error:
                 logger.warning(f"Failed to clean up temporary file {temp_file_path}: {cleanup_error}")
         
-        openai_service = get_openai_service()
-        mapped_form_data = openai_service.map_text_to_fields(
+        gemini_service = get_gemini_service()
+        mapped_form_data = gemini_service.map_text_to_fields(
             transcribed_text,
             json.dumps(form_data)
         )

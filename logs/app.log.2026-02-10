@@ -1,0 +1,393 @@
+2026-02-10 20:02:02 - FormFiller - INFO - Starting FormFiller server...
+2026-02-10 20:02:02 - FormFiller - INFO - Server will run at http://0.0.0.0:8000
+2026-02-10 20:02:02 - FormFiller - INFO - API documentation available at http://0.0.0.0:8000/docs
+2026-02-10 20:02:05 - FormFiller - INFO - Initializing AI models...
+2026-02-10 20:02:05 - FormFiller - INFO - Loading Whisper model: medium
+2026-02-10 20:02:11 - FormFiller - INFO - Whisper model loaded successfully
+2026-02-10 20:02:11 - FormFiller - INFO - Loading OpenAI model...
+2026-02-10 20:02:11 - FormFiller - INFO - OpenAI model loaded successfully
+2026-02-10 20:02:11 - FormFiller - INFO - AI models initialized successfully
+2026-02-10 20:03:46 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmp3htq_jle.webm
+2026-02-10 20:03:46 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmp3htq_jle.webm
+2026-02-10 20:04:16 - FormFiller - INFO - Transcription completed. Detected language: pa
+2026-02-10 20:04:16 - FormFiller - DEBUG - Transcribed text:  jek bbie jaws  我們 Gates   espa Ɔ Quiz   kung  celand  在   LAKE   etap  Elliot  Ə  ঎ mouve  উশা需  মাত� y
+2026-02-10 20:04:16 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmp3htq_jle.webm
+2026-02-10 20:04:16 - FormFiller - INFO - Processing transcription:  jek bbie jaws  我們 Gates   espa Ɔ Quiz   kung  cel...
+2026-02-10 20:04:16 - FormFiller - INFO - Routing node: Detecting language...
+2026-02-10 20:04:18 - FormFiller - INFO - Routing node: Detected language = bengali
+2026-02-10 20:04:18 - FormFiller - INFO - Using Bengali form mapping prompt
+2026-02-10 20:04:18 - FormFiller - INFO - Triggering the chain...
+2026-02-10 20:04:21 - FormFiller - INFO - Raw parsed data: {}
+2026-02-10 20:04:21 - FormFiller - INFO - Final Mapped Data (lang=bengali): {}
+2026-02-10 20:06:11 - FormFiller - INFO - Starting FormFiller server...
+2026-02-10 20:06:11 - FormFiller - INFO - Server will run at http://0.0.0.0:8000
+2026-02-10 20:06:11 - FormFiller - INFO - API documentation available at http://0.0.0.0:8000/docs
+2026-02-10 20:06:13 - FormFiller - INFO - Initializing AI models...
+2026-02-10 20:06:13 - FormFiller - INFO - Loading Whisper model: medium
+2026-02-10 20:06:17 - FormFiller - INFO - Whisper model loaded successfully
+2026-02-10 20:06:17 - FormFiller - INFO - Loading OpenAI model...
+2026-02-10 20:06:17 - FormFiller - INFO - OpenAI model loaded successfully
+2026-02-10 20:06:17 - FormFiller - INFO - AI models initialized successfully
+2026-02-10 20:07:05 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmptnypv9t9.webm
+2026-02-10 20:07:05 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmptnypv9t9.webm
+2026-02-10 20:07:09 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 20:07:09 - FormFiller - DEBUG - Transcribed text:  Arrest date is 24th June 2023.  My name is Shyam Mohan Tripathi.  Gender is male.  District is Hawda Rural.  AC name is Hawda Uttar.  Identification is our voter card.  KCR is 2023.  Our nationality is Pakistan.  Identification mark is black spot.
+2026-02-10 20:07:09 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmptnypv9t9.webm
+2026-02-10 20:07:09 - FormFiller - INFO - Processing transcription:  Arrest date is 24th June 2023.  My name is Shyam ...
+2026-02-10 20:07:09 - FormFiller - INFO - Routing node: Detecting language...
+2026-02-10 20:07:11 - FormFiller - INFO - Routing node: Detected language = english
+2026-02-10 20:07:11 - FormFiller - INFO - Using English form mapping prompt
+2026-02-10 20:07:11 - FormFiller - INFO - Triggering the chain...
+2026-02-10 20:07:16 - FormFiller - INFO - Raw parsed data: {'arrest_date': '2023-06-24', 'arrest_fname': 'Shyam', 'arrest_mname': 'Mohan', 'arrest_lname': 'Tripathi', 'sagender': 'true', 'arrest_district': '3', 'arrest_ac_name': 'Howrah Uttar', 'id_type': 'voter_card', 'arrest_year': '2023', 'arrest_nationality': '3', 'arrest_idmark': 'Black spot'}
+2026-02-10 20:07:16 - FormFiller - INFO - Final Mapped Data (lang=english): {'arrest_date': '2023-06-24', 'arrest_fname': 'Shyam', 'arrest_mname': 'Mohan', 'arrest_lname': 'Tripathi', 'sagender': 'true', 'arrest_district': '3', 'arrest_ac_name': 'Howrah Uttar', 'id_type': 'voter_card', 'arrest_year': '2023', 'arrest_nationality': '3', 'arrest_idmark': 'Black spot'}
+2026-02-10 20:10:25 - FormFiller - INFO - Initializing AI models...
+2026-02-10 20:10:25 - FormFiller - INFO - Loading Whisper model: medium
+2026-02-10 20:10:30 - FormFiller - INFO - Whisper model loaded successfully
+2026-02-10 20:10:30 - FormFiller - INFO - Loading OpenAI model...
+2026-02-10 20:10:30 - FormFiller - INFO - OpenAI model loaded successfully
+2026-02-10 20:10:30 - FormFiller - INFO - AI models initialized successfully
+2026-02-10 20:12:07 - FormFiller - INFO - Initializing AI models...
+2026-02-10 20:12:07 - FormFiller - INFO - Loading Whisper model: medium
+2026-02-10 20:12:12 - FormFiller - INFO - Whisper model loaded successfully
+2026-02-10 20:12:12 - FormFiller - INFO - Loading OpenAI model...
+2026-02-10 20:12:12 - FormFiller - INFO - OpenAI model loaded successfully
+2026-02-10 20:12:12 - FormFiller - INFO - AI models initialized successfully
+2026-02-10 20:13:00 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmp479ghocl.webm
+2026-02-10 20:13:00 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmp479ghocl.webm
+2026-02-10 20:13:04 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 20:13:04 - FormFiller - DEBUG - Transcribed text:  The arrest date is October 24, 2023.  My name is Shyam Antripathi.  Gender is male.  District is Hawda Rural.  ACM is Hawda Uttar.  Municipality name is Hawda Municipal Corporation.  Nationality is Pakistan.  PIN code is 711107.  I have a voter card.  My case is 2025.  Case number is 50.
+2026-02-10 20:13:04 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmp479ghocl.webm
+2026-02-10 20:13:04 - FormFiller - INFO - Processing transcription:  The arrest date is October 24, 2023.  My name is ...
+2026-02-10 20:13:04 - FormFiller - INFO - Routing node: Detecting language...
+2026-02-10 20:13:09 - FormFiller - INFO - Routing node: Detected language = english
+2026-02-10 20:13:09 - FormFiller - INFO - Using English form mapping prompt
+2026-02-10 20:13:09 - FormFiller - INFO - Triggering the chain...
+2026-02-10 20:13:14 - FormFiller - INFO - Raw parsed data: {'arrest_date': '2023-10-24', 'arrest_fname': 'Shyam', 'arrest_lname': 'Antripathi', 'sagender': 'true', 'arrest_district': '3', 'arrest_ac_name': 'Howrah Uttar', 'arrest_municipality_name': 'Howrah Municipal Corporation', 'arrest_nationality': '3', 'arrest_pin': '711107', 'id_type': 'voter_card', 'arrest_year': '2025', 'arrest_caseno': '50'}
+2026-02-10 20:13:14 - FormFiller - INFO - Final Mapped Data (lang=english): {'arrest_date': '2023-10-24', 'arrest_fname': 'Shyam', 'arrest_lname': 'Antripathi', 'sagender': 'true', 'arrest_district': '3', 'arrest_ac_name': 'Howrah Uttar', 'arrest_municipality_name': 'Howrah Municipal Corporation', 'arrest_nationality': '3', 'arrest_pin': '711107', 'id_type': 'voter_card', 'arrest_year': '2025', 'arrest_caseno': '50'}
+2026-02-10 20:16:00 - FormFiller - INFO - Starting FormFiller server...
+2026-02-10 20:16:00 - FormFiller - INFO - Server will run at http://0.0.0.0:8000
+2026-02-10 20:16:00 - FormFiller - INFO - API documentation available at http://0.0.0.0:8000/docs
+2026-02-10 20:16:02 - FormFiller - INFO - Initializing AI models...
+2026-02-10 20:16:02 - FormFiller - INFO - Loading Whisper model: medium
+2026-02-10 20:16:06 - FormFiller - INFO - Whisper model loaded successfully
+2026-02-10 20:16:06 - FormFiller - INFO - Loading OpenAI model...
+2026-02-10 20:16:06 - FormFiller - INFO - OpenAI model loaded successfully
+2026-02-10 20:16:06 - FormFiller - INFO - AI models initialized successfully
+2026-02-10 20:16:29 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpceea36hl.webm
+2026-02-10 20:16:29 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpceea36hl.webm
+2026-02-10 20:16:31 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 20:16:31 - FormFiller - DEBUG - Transcribed text:  My name is Shyam Mohan Tripathi.  My AC name is Havda Uttar.
+2026-02-10 20:16:31 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpceea36hl.webm
+2026-02-10 20:16:31 - FormFiller - INFO - Processing transcription:  My name is Shyam Mohan Tripathi.  My AC name is H...
+2026-02-10 20:16:31 - FormFiller - INFO - Routing node: Detecting language...
+2026-02-10 20:16:34 - FormFiller - INFO - Routing node: Detected language = english
+2026-02-10 20:16:34 - FormFiller - INFO - Using English form mapping prompt
+2026-02-10 20:16:34 - FormFiller - INFO - Triggering the chain...
+2026-02-10 20:16:37 - FormFiller - INFO - Raw parsed data: {'arrest_fname': 'Shyam', 'arrest_mname': 'Mohan', 'arrest_lname': 'Tripathi', 'arrest_ac_name': 'Howrah Uttar'}
+2026-02-10 20:16:37 - FormFiller - INFO - Final Mapped Data (lang=english): {'arrest_fname': 'Shyam', 'arrest_mname': 'Mohan', 'arrest_lname': 'Tripathi', 'arrest_ac_name': 'Howrah Uttar'}
+2026-02-10 20:20:58 - FormFiller - INFO - Initializing AI models...
+2026-02-10 20:20:58 - FormFiller - INFO - Loading Whisper model: medium
+2026-02-10 20:21:02 - FormFiller - INFO - Whisper model loaded successfully
+2026-02-10 20:21:02 - FormFiller - INFO - Loading OpenAI model...
+2026-02-10 20:21:02 - FormFiller - INFO - OpenAI model loaded successfully
+2026-02-10 20:21:02 - FormFiller - INFO - AI models initialized successfully
+2026-02-10 20:25:59 - FormFiller - INFO - Initializing AI models...
+2026-02-10 20:25:59 - FormFiller - INFO - Loading Whisper model: medium
+2026-02-10 20:26:04 - FormFiller - INFO - Whisper model loaded successfully
+2026-02-10 20:26:04 - FormFiller - INFO - Loading OpenAI model...
+2026-02-10 20:26:04 - FormFiller - INFO - OpenAI model loaded successfully
+2026-02-10 20:26:04 - FormFiller - INFO - AI models initialized successfully
+2026-02-10 20:26:39 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmp365gwcc4.webm
+2026-02-10 20:26:39 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmp365gwcc4.webm
+2026-02-10 20:26:44 - FormFiller - INFO - Transcription completed. Detected language: gu
+2026-02-10 20:26:44 - FormFiller - DEBUG - Transcribed text:  अमां नाम हुच्छे श्याम मौहं ट्रिपाथी  अमां दिश्टिक हुछे हावडा रूरल  और मोबाइल नमर हुछे 9-1-6-3-6-4-2-5-8-6  अमार काचे वोटर गाडा जी
+2026-02-10 20:26:44 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmp365gwcc4.webm
+2026-02-10 20:26:44 - FormFiller - INFO - Processing transcription:  अमां नाम हुच्छे श्याम मौहं ट्रिपाथी  अमां दिश्टिक...
+2026-02-10 20:26:44 - FormFiller - INFO - Routing node: Detecting language...
+2026-02-10 20:26:49 - FormFiller - INFO - Routing node: Detected language = bengali
+2026-02-10 20:26:49 - FormFiller - INFO - Using Bengali form mapping prompt
+2026-02-10 20:26:49 - FormFiller - INFO - Triggering the chain...
+2026-02-10 20:26:53 - FormFiller - INFO - Raw parsed data: {'arrest_fname': 'শ্যাম', 'arrest_mname': 'মৌহঁ', 'arrest_lname': 'ত্রিপাঠী', 'arrest_district': '3', 'arrest_ph': '9163642586', 'id_type': 'voter_card'}
+2026-02-10 20:26:53 - FormFiller - INFO - Final Mapped Data (lang=bengali): {'arrest_fname': 'শ্যাম', 'arrest_mname': 'মৌহঁ', 'arrest_lname': 'ত্রিপাঠী', 'arrest_district': '3', 'arrest_ph': '9163642586', 'id_type': 'voter_card'}
+2026-02-10 20:28:12 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpcghnqa7q.webm
+2026-02-10 20:28:12 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpcghnqa7q.webm
+2026-02-10 20:28:14 - FormFiller - INFO - Transcription completed. Detected language: pa
+2026-02-10 20:28:14 - FormFiller - DEBUG - Transcribed text:  My name is Shyam Mohan Tripathi  Aaliyah's name is Hello  My Guardian name is Hari Anand Tripathi  My address is 64 Madhav Babulen, Gujri Havda
+2026-02-10 20:28:14 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpcghnqa7q.webm
+2026-02-10 20:28:14 - FormFiller - INFO - Processing transcription:  My name is Shyam Mohan Tripathi  Aaliyah's name i...
+2026-02-10 20:28:14 - FormFiller - INFO - Routing node: Detecting language...
+2026-02-10 20:28:15 - FormFiller - INFO - Routing node: Detected language = english
+2026-02-10 20:28:15 - FormFiller - INFO - Using English form mapping prompt
+2026-02-10 20:28:15 - FormFiller - INFO - Triggering the chain...
+2026-02-10 20:28:19 - FormFiller - INFO - Raw parsed data: {'cfname': 'Shyam', 'cmname': 'Mohan', 'clname': 'Tripathi', 'calias': 'Hello', 'cgname': 'Hari Anand Tripathi', 'caddress': '64 Madhav Babulen, Gujri Havda'}
+2026-02-10 20:28:19 - FormFiller - INFO - Final Mapped Data (lang=english): {'cfname': 'Shyam', 'cmname': 'Mohan', 'clname': 'Tripathi', 'calias': 'Hello', 'cgname': 'Hari Anand Tripathi', 'caddress': '64 Madhav Babulen, Gujri Havda'}
+2026-02-10 20:40:32 - FormFiller - INFO - Initializing AI models...
+2026-02-10 20:40:32 - FormFiller - INFO - Loading Whisper model: medium
+2026-02-10 20:40:36 - FormFiller - INFO - Whisper model loaded successfully
+2026-02-10 20:40:36 - FormFiller - INFO - Loading OpenAI model...
+2026-02-10 20:40:36 - FormFiller - INFO - OpenAI model loaded successfully
+2026-02-10 20:40:36 - FormFiller - INFO - AI models initialized successfully
+2026-02-10 20:49:32 - FormFiller - INFO - Initializing AI models...
+2026-02-10 20:49:32 - FormFiller - INFO - Loading Whisper model: medium
+2026-02-10 20:49:37 - FormFiller - INFO - Whisper model loaded successfully
+2026-02-10 20:49:37 - FormFiller - INFO - Loading OpenAI model...
+2026-02-10 20:49:37 - FormFiller - INFO - OpenAI model loaded successfully
+2026-02-10 20:49:37 - FormFiller - INFO - AI models initialized successfully
+2026-02-10 20:49:42 - FormFiller - INFO - Initializing AI models...
+2026-02-10 20:49:42 - FormFiller - INFO - Loading Whisper model: medium
+2026-02-10 20:49:46 - FormFiller - INFO - Whisper model loaded successfully
+2026-02-10 20:49:46 - FormFiller - INFO - Loading OpenAI model...
+2026-02-10 20:49:46 - FormFiller - INFO - OpenAI model loaded successfully
+2026-02-10 20:49:46 - FormFiller - INFO - AI models initialized successfully
+2026-02-10 20:50:15 - FormFiller - INFO - Initializing AI models...
+2026-02-10 20:50:15 - FormFiller - INFO - Loading Whisper model: medium
+2026-02-10 20:50:19 - FormFiller - INFO - Whisper model loaded successfully
+2026-02-10 20:50:19 - FormFiller - INFO - Loading OpenAI model...
+2026-02-10 20:50:20 - FormFiller - INFO - OpenAI model loaded successfully
+2026-02-10 20:50:20 - FormFiller - INFO - AI models initialized successfully
+2026-02-10 21:00:16 - FormFiller - INFO - Starting FormFiller server...
+2026-02-10 21:00:16 - FormFiller - INFO - Server will run at http://0.0.0.0:8000
+2026-02-10 21:00:16 - FormFiller - INFO - API documentation available at http://0.0.0.0:8000/docs
+2026-02-10 21:00:18 - FormFiller - INFO - Initializing AI models...
+2026-02-10 21:00:18 - FormFiller - INFO - Loading Whisper model: medium
+2026-02-10 21:00:22 - FormFiller - INFO - Whisper model loaded successfully
+2026-02-10 21:00:22 - FormFiller - INFO - Loading OpenAI model...
+2026-02-10 21:00:22 - FormFiller - INFO - OpenAI model loaded successfully
+2026-02-10 21:00:22 - FormFiller - INFO - AI models initialized successfully
+2026-02-10 21:01:02 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpx361fygj.webm
+2026-02-10 21:01:02 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpx361fygj.webm
+2026-02-10 21:01:05 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:01:05 - FormFiller - DEBUG - Transcribed text:  Case date is 20 October 2023. BNS section is 50. Act is Indian Minerals Act.
+2026-02-10 21:01:05 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpx361fygj.webm
+2026-02-10 21:01:05 - FormFiller - INFO - Processing transcription:  Case date is 20 October 2023. BNS section is 50. ...
+2026-02-10 21:01:05 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:01:08 - FormFiller - INFO - Raw parsed data: {'case_date': '2023-10-20', 'ipsection': '50', 'case_actname': 'Indian Minerals Act'}
+2026-02-10 21:01:08 - FormFiller - INFO - Final Mapped Data: {'case_date': '2023-10-20', 'ipsection': '50', 'case_actname': 'Indian Minerals Act'}
+2026-02-10 21:01:42 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpj_5_yb6c.webm
+2026-02-10 21:01:42 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpj_5_yb6c.webm
+2026-02-10 21:01:44 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:01:44 - FormFiller - DEBUG - Transcribed text:  Select the West Bengal Public Land Act.
+2026-02-10 21:01:44 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpj_5_yb6c.webm
+2026-02-10 21:01:44 - FormFiller - INFO - Processing transcription:  Select the West Bengal Public Land Act....
+2026-02-10 21:01:44 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:01:45 - FormFiller - INFO - Raw parsed data: {'case_actname': 'West Bengal Public Land Act'}
+2026-02-10 21:01:45 - FormFiller - INFO - Final Mapped Data: {'case_actname': 'West Bengal Public Land Act'}
+2026-02-10 21:02:26 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmps71iftwu.webm
+2026-02-10 21:02:26 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmps71iftwu.webm
+2026-02-10 21:02:29 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:02:29 - FormFiller - DEBUG - Transcribed text:  First name is Shyam, middle name is Mohan, last name is Tripathi, select district Havda Rural,  AC name is Havda Uttar, Municipality name is Havda Municipal Corporation.  I have only voter card, my KCR is 2020.  Arrest time is 9.15am, select male as gender.
+2026-02-10 21:02:29 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmps71iftwu.webm
+2026-02-10 21:02:29 - FormFiller - INFO - Processing transcription:  First name is Shyam, middle name is Mohan, last n...
+2026-02-10 21:02:29 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:02:38 - FormFiller - INFO - Raw parsed data: {'arrest_fname': 'Shyam', 'arrest_mname': 'Mohan', 'arrest_lname': 'Tripathi', 'arrest_district': 'Howrah Rural', 'arrest_ac_name': 'Howrah Uttar', 'arrest_municipality_name': 'Howrah Municipal Corporation', 'id_type': 'Voter No', 'arrest_year': '2020', 'arrest_time': '09:15 AM', 'sagender': 'true'}
+2026-02-10 21:02:38 - FormFiller - INFO - Final Mapped Data: {'arrest_fname': 'Shyam', 'arrest_mname': 'Mohan', 'arrest_lname': 'Tripathi', 'arrest_district': 'Howrah Rural', 'arrest_ac_name': 'Howrah Uttar', 'arrest_municipality_name': 'Howrah Municipal Corporation', 'id_type': 'Voter No', 'arrest_year': '2020', 'arrest_time': '09:15 AM', 'sagender': 'true'}
+2026-02-10 21:04:24 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpphjomfr2.webm
+2026-02-10 21:04:24 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpphjomfr2.webm
+2026-02-10 21:04:25 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:04:25 - FormFiller - DEBUG - Transcribed text:  Case date is 20 October 2020 Select Act  The East Kolkata Wetlands Act
+2026-02-10 21:04:25 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpphjomfr2.webm
+2026-02-10 21:04:25 - FormFiller - INFO - Processing transcription:  Case date is 20 October 2020 Select Act  The East...
+2026-02-10 21:04:25 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:04:27 - FormFiller - INFO - Raw parsed data: {'case_date': '2020-10-20', 'case_actname': 'The East Kolkata Wetlands Act'}
+2026-02-10 21:04:27 - FormFiller - INFO - Final Mapped Data: {'case_date': '2020-10-20', 'case_actname': 'The East Kolkata Wetlands Act'}
+2026-02-10 21:04:53 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmp4x2nnmo7.webm
+2026-02-10 21:04:53 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmp4x2nnmo7.webm
+2026-02-10 21:04:54 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:04:54 - FormFiller - DEBUG - Transcribed text:  Select arms act.
+2026-02-10 21:04:54 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmp4x2nnmo7.webm
+2026-02-10 21:04:54 - FormFiller - INFO - Processing transcription:  Select arms act....
+2026-02-10 21:04:54 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:04:56 - FormFiller - INFO - Raw parsed data: {'case_actname': 'Arms Act, 1959'}
+2026-02-10 21:04:56 - FormFiller - INFO - Final Mapped Data: {'case_actname': 'Arms Act, 1959'}
+2026-02-10 21:05:36 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpmv0sjsml.webm
+2026-02-10 21:05:36 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpmv0sjsml.webm
+2026-02-10 21:05:37 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:05:37 - FormFiller - DEBUG - Transcribed text:  Select air prevention and control of pollution at
+2026-02-10 21:05:37 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpmv0sjsml.webm
+2026-02-10 21:05:37 - FormFiller - INFO - Processing transcription:  Select air prevention and control of pollution at...
+2026-02-10 21:05:37 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:05:38 - FormFiller - INFO - Raw parsed data: {'case_actname': 'Air (Prevention and Control of Pollution) Act'}
+2026-02-10 21:05:38 - FormFiller - INFO - Final Mapped Data: {'case_actname': 'Air (Prevention and Control of Pollution) Act'}
+2026-02-10 21:05:54 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpk0c_5gm4.webm
+2026-02-10 21:05:54 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpk0c_5gm4.webm
+2026-02-10 21:05:55 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:05:55 - FormFiller - DEBUG - Transcribed text:  Select anti-corruption laws.
+2026-02-10 21:05:55 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpk0c_5gm4.webm
+2026-02-10 21:05:55 - FormFiller - INFO - Processing transcription:  Select anti-corruption laws....
+2026-02-10 21:05:55 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:05:57 - FormFiller - INFO - Raw parsed data: {'case_actname': 'Prevention of Corruption Act, 1988'}
+2026-02-10 21:05:57 - FormFiller - INFO - Final Mapped Data: {'case_actname': 'Prevention of Corruption Act, 1988'}
+2026-02-10 21:07:03 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpfekudpog.webm
+2026-02-10 21:07:03 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpfekudpog.webm
+2026-02-10 21:07:06 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:07:06 - FormFiller - DEBUG - Transcribed text:  First name is Shyam, middle name is Mohan, last name is Tripathi  Gender is Male, Guardian name is AKT  Address is 64 Madhav Babu Lane, Gusudi  Select district, Hawra Rural  Email is tripatishyam22 at the rate gmail.com  Mobile number is 9163642586  Check mark arrested
+2026-02-10 21:07:06 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpfekudpog.webm
+2026-02-10 21:07:06 - FormFiller - INFO - Processing transcription:  First name is Shyam, middle name is Mohan, last n...
+2026-02-10 21:07:06 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:07:08 - FormFiller - INFO - Raw parsed data: {'accused_fname': 'Shyam', 'accused_mname': 'Mohan', 'accused_lname': 'Tripathi', 'accused_gender': 'true', 'accused_gname': 'AKT', 'accused_address': '64 Madhav Babu Lane, Gusudi', 'accused_district': 'Howrah Rural', 'accused_email': 'tripatishyam22@gmail.com', 'accused_mobile': '9163642586', 'accused_arrest': 'true'}
+2026-02-10 21:07:08 - FormFiller - INFO - Final Mapped Data: {'accused_fname': 'Shyam', 'accused_mname': 'Mohan', 'accused_lname': 'Tripathi', 'accused_gender': 'true', 'accused_gname': 'AKT', 'accused_address': '64 Madhav Babu Lane, Gusudi', 'accused_district': 'Howrah Rural', 'accused_email': 'tripatishyam22@gmail.com', 'accused_mobile': '9163642586', 'accused_arrest': 'true'}
+2026-02-10 21:09:17 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpr9dvc2ri.webm
+2026-02-10 21:09:17 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpr9dvc2ri.webm
+2026-02-10 21:09:19 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:09:19 - FormFiller - DEBUG - Transcribed text:  My name is first name Shyamon Tripathi  Gender is male  Guardian means AKT  District is Malda  Select village  AC name is Havda Uttar  I am speaking in Bengali
+2026-02-10 21:09:19 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpr9dvc2ri.webm
+2026-02-10 21:09:19 - FormFiller - INFO - Processing transcription:  My name is first name Shyamon Tripathi  Gender is...
+2026-02-10 21:09:19 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:09:24 - FormFiller - INFO - Raw parsed data: {'parrest_fname': 'শ্যামন', 'parrest_lname': 'ত্রিপাঠি', 'parrest_gender': 'পুরুষ', 'parrest_gname': 'এ.কে.টি', 'parrest_district1': 'মালদা', 'parrest_vc': 'গ্রাম', 'parrest_ac_name': 'হাওড়া উত্তর'}
+2026-02-10 21:09:24 - FormFiller - INFO - Final Mapped Data: {'parrest_fname': 'শ্যামন', 'parrest_lname': 'ত্রিপাঠি', 'parrest_gender': 'পুরুষ', 'parrest_gname': 'এ.কে.টি', 'parrest_district1': 'মালদা', 'parrest_vc': 'গ্রাম', 'parrest_ac_name': 'হাওড়া উত্তর'}
+2026-02-10 21:10:19 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpn0_386wh.webm
+2026-02-10 21:10:19 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpn0_386wh.webm
+2026-02-10 21:10:20 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:10:20 - FormFiller - DEBUG - Transcribed text:  Act is 122 BNS. Identification proof is Aadhaar card.
+2026-02-10 21:10:20 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpn0_386wh.webm
+2026-02-10 21:10:20 - FormFiller - INFO - Processing transcription:  Act is 122 BNS. Identification proof is Aadhaar c...
+2026-02-10 21:10:20 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:10:22 - FormFiller - INFO - Raw parsed data: {'parrest_act': 'Other', 'pid_type': 'Aadhar No'}
+2026-02-10 21:10:22 - FormFiller - INFO - Final Mapped Data: {'parrest_act': 'Other', 'pid_type': 'Aadhar No'}
+2026-02-10 21:10:54 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpsnfx05tp.webm
+2026-02-10 21:10:54 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpsnfx05tp.webm
+2026-02-10 21:10:55 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:10:55 - FormFiller - DEBUG - Transcribed text:  Gender ochi e male. I am speaking Bengali.
+2026-02-10 21:10:55 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpsnfx05tp.webm
+2026-02-10 21:10:55 - FormFiller - INFO - Processing transcription:  Gender ochi e male. I am speaking Bengali....
+2026-02-10 21:10:55 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:10:57 - FormFiller - INFO - Raw parsed data: {'parrest_gender': 'true'}
+2026-02-10 21:10:57 - FormFiller - INFO - Final Mapped Data: {'parrest_gender': 'true'}
+2026-02-10 21:12:50 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpgpdtystw.webm
+2026-02-10 21:12:50 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpgpdtystw.webm
+2026-02-10 21:12:52 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:12:52 - FormFiller - DEBUG - Transcribed text:  Gender is female.
+2026-02-10 21:12:52 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpgpdtystw.webm
+2026-02-10 21:12:52 - FormFiller - INFO - Processing transcription:  Gender is female....
+2026-02-10 21:12:52 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:12:53 - FormFiller - INFO - Raw parsed data: {'sagender': 'false'}
+2026-02-10 21:12:53 - FormFiller - INFO - Final Mapped Data: {'sagender': 'false'}
+2026-02-10 21:20:12 - FormFiller - INFO - Starting FormFiller server...
+2026-02-10 21:20:12 - FormFiller - INFO - Server will run at http://0.0.0.0:8000
+2026-02-10 21:20:12 - FormFiller - INFO - API documentation available at http://0.0.0.0:8000/docs
+2026-02-10 21:20:15 - FormFiller - INFO - Initializing AI models...
+2026-02-10 21:20:15 - FormFiller - INFO - Loading Whisper model: medium
+2026-02-10 21:20:21 - FormFiller - INFO - Whisper model loaded successfully
+2026-02-10 21:20:21 - FormFiller - INFO - Loading OpenAI model...
+2026-02-10 21:20:21 - FormFiller - INFO - OpenAI model loaded successfully
+2026-02-10 21:20:21 - FormFiller - INFO - AI models initialized successfully
+2026-02-10 21:20:55 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmp3xjt9uuf.webm
+2026-02-10 21:20:55 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmp3xjt9uuf.webm
+2026-02-10 21:20:58 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:20:58 - FormFiller - DEBUG - Transcribed text:  Select gender female.
+2026-02-10 21:20:58 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmp3xjt9uuf.webm
+2026-02-10 21:20:58 - FormFiller - INFO - Processing transcription:  Select gender female....
+2026-02-10 21:20:58 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:20:59 - FormFiller - INFO - Raw parsed data: {'sagender': 'Female'}
+2026-02-10 21:20:59 - FormFiller - INFO - Final Mapped Data: {'sagender': 'female'}
+2026-02-10 21:21:36 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmp4ml5flvv.webm
+2026-02-10 21:21:36 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmp4ml5flvv.webm
+2026-02-10 21:21:37 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:21:37 - FormFiller - DEBUG - Transcribed text:  Select political.
+2026-02-10 21:21:37 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmp4ml5flvv.webm
+2026-02-10 21:21:37 - FormFiller - INFO - Processing transcription:  Select political....
+2026-02-10 21:21:37 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:21:39 - FormFiller - INFO - Raw parsed data: {'case_type': 'Political'}
+2026-02-10 21:21:39 - FormFiller - INFO - Final Mapped Data: {'case_type': 'Political'}
+2026-02-10 21:25:15 - FormFiller - INFO - Initializing AI models...
+2026-02-10 21:25:15 - FormFiller - INFO - Loading Whisper model: medium
+2026-02-10 21:25:20 - FormFiller - INFO - Whisper model loaded successfully
+2026-02-10 21:25:20 - FormFiller - INFO - Loading OpenAI model...
+2026-02-10 21:25:21 - FormFiller - INFO - OpenAI model loaded successfully
+2026-02-10 21:25:21 - FormFiller - INFO - AI models initialized successfully
+2026-02-10 21:40:33 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpl3_w7xeq.webm
+2026-02-10 21:40:33 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpl3_w7xeq.webm
+2026-02-10 21:40:36 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:40:36 - FormFiller - DEBUG - Transcribed text:  case date is 25 October 2018 select act air prevention and control of  pollution amendment act yes it is a cybercrime case select MCC
+2026-02-10 21:40:36 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpl3_w7xeq.webm
+2026-02-10 21:40:36 - FormFiller - INFO - Processing transcription:  case date is 25 October 2018 select act air preve...
+2026-02-10 21:40:36 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:40:38 - FormFiller - INFO - Raw parsed data: {'case_date': '2018-10-25', 'case_actname': 'Air Prevention and Control of Pollution Amendment Act', 'cyber_check': 'true', 'case_type': 'MCC'}
+2026-02-10 21:40:38 - FormFiller - INFO - Final Mapped Data: {'case_date': '2018-10-25', 'case_actname': 'Air Prevention and Control of Pollution Amendment Act', 'cyber_check': 'true', 'case_type': 'MCC'}
+2026-02-10 21:43:00 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmprvwtkvrh.webm
+2026-02-10 21:43:00 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmprvwtkvrh.webm
+2026-02-10 21:43:05 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:43:05 - FormFiller - DEBUG - Transcribed text:  Arrest date is 20 October 2018. I am speaking in Bengali. Name is Shyamohan Tripathi.  Middle name is Mohan. Last name is Tripathi. Alias is he. Select gender female.  Guardian name is AKT. Age is 50. Identification mark is none. Arrest time  is 10-15 night. District is Hawda Police Commission rate. Select city. AC name is  Hawda Uttar. Municipality name is Hawda Municipal Corporation. Arrested by CID.  PIN code is 711107. Mobile number is 9163642586. Nature of offense is  Section 37B. Select Aadhaar card. Case year is 2024. Case number is 52.
+2026-02-10 21:43:05 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmprvwtkvrh.webm
+2026-02-10 21:43:05 - FormFiller - INFO - Processing transcription:  Arrest date is 20 October 2018. I am speaking in ...
+2026-02-10 21:43:05 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:43:11 - FormFiller - INFO - Raw parsed data: {'arrest_date': '2018-10-20', 'arrest_fname': 'শ্যামোহন', 'arrest_mname': 'মোহন', 'arrest_lname': 'ত্রিপাঠী', 'arrest_alias': 'হে', 'sagender': 'Female', 'arrest_gname': 'একে টি', 'arrest_age': '50', 'arrest_idmark': 'কোনওটি নয়', 'arrest_time': '২২:১৫', 'arrest_district': 'Howrah Police Commissionerate', 'arrest_vc': 'City', 'arrest_ac_name': 'হাওড়া উত্তর', 'arrest_municipality_name': 'হাওড়া মিউনিসিপ্যাল কর্পোরেশন', 'arrest_by_whom': 'CID', 'arrest_pin': '711107', 'arrest_ph': '9163642586', 'arrest_nature_of_offence_charge': 'Section 37B', 'id_type': 'Aadhar No', 'arrest_year': '2024', 'arrest_caseno': '52'}
+2026-02-10 21:43:11 - FormFiller - INFO - Final Mapped Data: {'arrest_date': '2018-10-20', 'arrest_fname': 'শ্যামোহন', 'arrest_mname': 'মোহন', 'arrest_lname': 'ত্রিপাঠী', 'arrest_alias': 'হে', 'sagender': 'female', 'arrest_gname': 'একে টি', 'arrest_age': '50', 'arrest_idmark': 'কোনওটি নয়', 'arrest_time': '২২:১৫', 'arrest_district': 'Howrah Police Commissionerate', 'arrest_vc': 'City', 'arrest_ac_name': 'হাওড়া উত্তর', 'arrest_municipality_name': 'হাওড়া মিউনিসিপ্যাল কর্পোরেশন', 'arrest_by_whom': 'CID', 'arrest_pin': '711107', 'arrest_ph': '9163642586', 'arrest_nature_of_offence_charge': 'Section 37B', 'id_type': 'Aadhar No', 'arrest_year': '2024', 'arrest_caseno': '52'}
+2026-02-10 21:49:31 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpbd7vnws7.webm
+2026-02-10 21:49:31 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpbd7vnws7.webm
+2026-02-10 21:49:32 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:49:32 - FormFiller - DEBUG - Transcribed text:  Select Air Prevention and Control of Pollution Abandonment Act.
+2026-02-10 21:49:32 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpbd7vnws7.webm
+2026-02-10 21:49:32 - FormFiller - INFO - Processing transcription:  Select Air Prevention and Control of Pollution Ab...
+2026-02-10 21:49:32 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:49:35 - FormFiller - INFO - Raw parsed data: {'case_actname': 'Air (Prevention and Control of Pollution) Act, 1981'}
+2026-02-10 21:49:35 - FormFiller - INFO - Final Mapped Data: {'case_actname': 'Air (Prevention and Control of Pollution) Act, 1981'}
+2026-02-10 21:50:06 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmp_lsfudr8.webm
+2026-02-10 21:50:06 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmp_lsfudr8.webm
+2026-02-10 21:50:07 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:50:07 - FormFiller - DEBUG - Transcribed text:  Select West Bengal Miner Mineral Rules.
+2026-02-10 21:50:07 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmp_lsfudr8.webm
+2026-02-10 21:50:07 - FormFiller - INFO - Processing transcription:  Select West Bengal Miner Mineral Rules....
+2026-02-10 21:50:07 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:50:08 - FormFiller - INFO - Raw parsed data: {'case_actname': 'West Bengal Minor Mineral Rules'}
+2026-02-10 21:50:08 - FormFiller - INFO - Final Mapped Data: {'case_actname': 'West Bengal Minor Mineral Rules'}
+2026-02-10 21:50:50 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpydzr29w3.webm
+2026-02-10 21:50:50 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpydzr29w3.webm
+2026-02-10 21:50:51 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:50:51 - FormFiller - DEBUG - Transcribed text:  Select Veg Bengal Mineral and Mineral Rules Act
+2026-02-10 21:50:51 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpydzr29w3.webm
+2026-02-10 21:50:51 - FormFiller - INFO - Processing transcription:  Select Veg Bengal Mineral and Mineral Rules Act...
+2026-02-10 21:50:51 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:50:54 - FormFiller - INFO - Raw parsed data: {'case_actname': 'Bengal Minerals and Mineral Rules Act'}
+2026-02-10 21:50:54 - FormFiller - INFO - Final Mapped Data: {'case_actname': 'Bengal Minerals and Mineral Rules Act'}
+2026-02-10 21:51:17 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmpkgfz2yow.webm
+2026-02-10 21:51:17 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmpkgfz2yow.webm
+2026-02-10 21:51:18 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:51:18 - FormFiller - DEBUG - Transcribed text:  Select Dowery Prohibition Act.
+2026-02-10 21:51:18 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmpkgfz2yow.webm
+2026-02-10 21:51:18 - FormFiller - INFO - Processing transcription:  Select Dowery Prohibition Act....
+2026-02-10 21:51:18 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:51:19 - FormFiller - INFO - Raw parsed data: {'case_actname': 'Dowry Prohibition Act, 1961'}
+2026-02-10 21:51:19 - FormFiller - INFO - Final Mapped Data: {'case_actname': 'Dowry Prohibition Act, 1961'}
+2026-02-10 21:52:31 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmp62vvulul.webm
+2026-02-10 21:52:31 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmp62vvulul.webm
+2026-02-10 21:52:32 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:52:32 - FormFiller - DEBUG - Transcribed text:  Select nationality Pakistan
+2026-02-10 21:52:32 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmp62vvulul.webm
+2026-02-10 21:52:32 - FormFiller - INFO - Processing transcription:  Select nationality Pakistan...
+2026-02-10 21:52:32 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:52:33 - FormFiller - INFO - Raw parsed data: {'cnationality': 'Pakistan'}
+2026-02-10 21:52:33 - FormFiller - INFO - Final Mapped Data: {'cnationality': 'Pakistan'}
+2026-02-10 21:53:14 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmp1k4mquyq.webm
+2026-02-10 21:53:14 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmp1k4mquyq.webm
+2026-02-10 21:53:15 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:53:15 - FormFiller - DEBUG - Transcribed text:  Select Nationality Pakistan
+2026-02-10 21:53:15 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmp1k4mquyq.webm
+2026-02-10 21:53:15 - FormFiller - INFO - Processing transcription:  Select Nationality Pakistan...
+2026-02-10 21:53:15 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:53:17 - FormFiller - INFO - Raw parsed data: {'cnationality': 'Pakistan'}
+2026-02-10 21:53:17 - FormFiller - INFO - Final Mapped Data: {'cnationality': 'Pakistan'}
+2026-02-10 21:53:58 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmp1qer3zit.webm
+2026-02-10 21:53:58 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmp1qer3zit.webm
+2026-02-10 21:53:59 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:53:59 - FormFiller - DEBUG - Transcribed text:  In victim details, select nationality, Pakistan.
+2026-02-10 21:53:59 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmp1qer3zit.webm
+2026-02-10 21:53:59 - FormFiller - INFO - Processing transcription:  In victim details, select nationality, Pakistan....
+2026-02-10 21:53:59 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:54:02 - FormFiller - INFO - Raw parsed data: {'victim_nationality': 'Pakistan'}
+2026-02-10 21:54:02 - FormFiller - INFO - Final Mapped Data: {'victim_nationality': 'Pakistan'}
+2026-02-10 21:54:57 - FormFiller - INFO - Processing audio via temporary file: C:\Users\User\AppData\Local\Temp\tmp3t3_xher.webm
+2026-02-10 21:54:57 - FormFiller - INFO - Transcribing audio file: C:\Users\User\AppData\Local\Temp\tmp3t3_xher.webm
+2026-02-10 21:54:58 - FormFiller - INFO - Transcription completed. Detected language: en
+2026-02-10 21:54:58 - FormFiller - DEBUG - Transcribed text:  Select same as complaint.
+2026-02-10 21:54:58 - FormFiller - DEBUG - Cleaned up temporary file: C:\Users\User\AppData\Local\Temp\tmp3t3_xher.webm
+2026-02-10 21:54:58 - FormFiller - INFO - Processing transcription:  Select same as complaint....
+2026-02-10 21:54:58 - FormFiller - INFO - Triggering the chain...
+2026-02-10 21:55:00 - FormFiller - INFO - Raw parsed data: {'accused_victim': 'true'}
+2026-02-10 21:55:00 - FormFiller - INFO - Final Mapped Data: {'accused_victim': 'true'}
+2026-02-10 22:00:06 - FormFiller - INFO - Initializing AI models...
+2026-02-10 22:00:06 - FormFiller - INFO - Loading Whisper model: medium
+2026-02-10 22:00:12 - FormFiller - INFO - Whisper model loaded successfully
+2026-02-10 22:00:12 - FormFiller - INFO - Loading OpenAI model...
+2026-02-10 22:00:13 - FormFiller - INFO - OpenAI model loaded successfully
+2026-02-10 22:00:13 - FormFiller - INFO - AI models initialized successfully

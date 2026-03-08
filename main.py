@@ -16,13 +16,13 @@ async def lifespan(app: FastAPI):
     """Manage application lifespan events"""
     logger.info("Initializing AI models...")
     from services.whisper_service import get_whisper_service
-    from services.openai_service import get_openai_service
+    from services.gemini_service import get_gemini_service
     
-    # Initialize AI services (Whisper for speech-to-text, OpenAI for LLM)
+    # Initialize AI services (Whisper for speech-to-text, Gemini for LLM)
     # Done synchronously to ensure models are ready before accepting requests
     try:
         get_whisper_service()
-        get_openai_service()
+        get_gemini_service()
         logger.info("AI models initialized successfully")
     except Exception as e:
         logger.warning(f"Failed to initialize AI models on startup: {e}")
