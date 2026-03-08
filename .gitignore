@@ -48,6 +48,10 @@ coverage.xml
 *.cover
 *.py.cover
 .hypothesis/
+
+# Windows system files
+desktop.ini
+Thumbs.db
 .pytest_cache/
 cover/
 
