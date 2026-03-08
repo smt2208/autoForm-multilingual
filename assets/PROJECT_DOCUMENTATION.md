@@ -770,7 +770,7 @@ def setup_logger(name: str = "FormFiller"):
 
 ```javascript
 const CONFIG = {
-    BACKEND_URL: 'https://formfiller-backend-dqaehcc5eaevfscs.southindia-01.azurewebsites.net',
+    BACKEND_URL: 'http://localhost:8000',
     API_ENDPOINTS: {
         process: '/api/process',
         health: '/health'
@@ -783,7 +783,7 @@ const CONFIG = {
 };
 ```
 
-- `BACKEND_URL` — where the backend server is running. Can be changed to `http://localhost:8000` for local development or a cloud URL for production (currently set to an Azure deployment).
+- `BACKEND_URL` — where the backend server is running. Currently set to `http://localhost:8000` for local development. Change to a cloud URL (e.g., an Azure deployment) for production.
 - `API_ENDPOINTS.process` — the path appended to `BACKEND_URL` to form the full API URL.
 - `AUDIO` — audio recording settings (sample rate, channels, format).
 
