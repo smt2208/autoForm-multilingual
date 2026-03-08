@@ -23,8 +23,8 @@ class Settings(BaseSettings):
     
     # Audio processing
     UPLOAD_DIR: str = "temp_uploads"
-    WHISPER_MODEL: str = os.getenv("WHISPER_MODEL", "small")
-    WHISPER_DEVICE: str = os.getenv("WHISPER_DEVICE", "medium")
+    WHISPER_MODEL: str = os.getenv("WHISPER_MODEL", "medium")
+    WHISPER_DEVICE: str = os.getenv("WHISPER_DEVICE", "cpu")
 
     GOOGLE_API_KEY: Any = os.getenv("GOOGLE_API_KEY", None)
     GOOGLE_MODEL: str = os.getenv("GOOGLE_MODEL", "gemma-3-12b-it")
