@@ -18,7 +18,7 @@ This document explains **every single file**, **every function**, **every flow**
    - 5.3 [config/prompts.py — The AI Prompt Engineering](#53-configpromptspy--the-ai-prompt-engineering)
    - 5.4 [api/routes.py — The API Endpoint](#54-apiroutespy--the-api-endpoint)
    - 5.5 [services/whisper_service.py — Speech-to-Text Engine](#55-serviceswhisper_servicepy--speech-to-text-engine)
-   - 5.6 [services/openai_service.py — The AI Brain (LLM)](#56-servicesopenai_servicepy--the-ai-brain-llm)
+   - 5.6 [services/gemini_service.py — The AI Brain (LLM)](#56-servicesgemini_servicepy--the-ai-brain-llm)
    - 5.7 [models/models.py — Data Models](#57-modelsmodelspy--data-models)
    - 5.8 [utils/field_processor.py — Post-Processing & Normalization](#58-utilsfield_processorpy--post-processing--normalization)
    - 5.9 [utils/file_handler.py — Temporary File Management](#59-utilsfile_handlerpy--temporary-file-management)
@@ -89,7 +89,7 @@ The system has **two major parts**:
 │                   │                                          │
 │           ┌───────┴────────┐                                 │
 │           ↓                ↓                                 │
-│   whisper_service.py   openai_service.py                     │
+│   whisper_service.py   gemini_service.py                     │
 │   (Voice → Text)       (Text → Form Fields)                 │
 │                              │                               │
 │                        config/prompts.py                      │
@@ -102,7 +102,7 @@ The system has **two major parts**:
 
 **In plain words:**
 - The **Chrome Extension** lives in your browser. It records your voice, scans the web page for form fields, and fills them.
-- The **Backend Server** runs on a computer (or cloud). It converts your voice to text (using Whisper AI) and then uses GPT-4.1 to understand what you said and map it to the correct form fields.
+- The **Backend Server** runs on a computer (or cloud). It converts your voice to text (using Whisper AI) and then uses **Google Gemini** to understand what you said and map it to the correct form fields.
 
 ---
 
@@ -159,12 +159,12 @@ The user speaks naturally: *"My name is Raju Das, father's name Gopal Das, age 3
 - The model converts speech to text. E.g.: *"my name is raju das father name gopal das age 35 address 12 mg road kolkata email raju at gmail dot com mobile 9876543210 case number 54 section 302"*
 - The temporary audio file is deleted.
 
-### Step 11: GPT-4.1 Maps Text to Form Fields
-- The `OpenAIService` (from `openai_service.py`) takes:
+### Step 11: Google Gemini Maps Text to Form Fields
+- The `GeminiService` (from `gemini_service.py`) takes:
   - The transcribed text
   - The JSON structure of all form fields
-- It sends both to **GPT-4.1** with a carefully crafted prompt (from `config/prompts.py`).
-- GPT-4.1 analyzes the transcribed text, understands context, corrects spelling errors, and returns a JSON mapping like:
+- It sends both to **Google Gemini** with a carefully crafted prompt (from `config/prompts.py`).
+- Gemini analyzes the transcribed text, understands context, corrects spelling errors, handles phonetic Bengali transliteration, and returns a JSON mapping like:
   ```json
   {
     "cfname": "Raju",
@@ -229,7 +229,7 @@ AutoForm_MultiLingual/
 ├── config/                    # Configuration layer
 │   ├── __init__.py            # Makes 'config' a Python package
 │   ├── settings.py            # App settings (ports, model names, API keys)
-│   └── prompts.py             # AI prompt templates for GPT-4.1
+│   └── prompts.py             # AI prompt templates for Google Gemini (multilingual logic)
 │
 ├── models/                    # Data models
 │   └── models.py              # Pydantic models (request/response schemas)
@@ -237,7 +237,7 @@ AutoForm_MultiLingual/
 ├── services/                  # Business logic layer
 │   ├── __init__.py            # Makes 'services' a Python package
 │   ├── whisper_service.py     # Speech-to-text using Faster-Whisper
-│   └── openai_service.py      # Text-to-form-fields using GPT-4.1
+│   └── gemini_service.py      # Text-to-form-fields using Google Gemini
 │
 ├── utils/                     # Utility functions
 │   ├── __init__.py            # Makes 'utils' a Python package
@@ -292,12 +292,12 @@ from fastapi.middleware.cors import CORSMiddleware
 async def lifespan(app: FastAPI):
     logger.info("Initializing AI models...")
     from services.whisper_service import get_whisper_service
-    from services.openai_service import get_openai_service
+    from services.gemini_service import get_gemini_service
     get_whisper_service()
-    get_openai_service()
+    get_gemini_service()
     yield
 ```
-- **Lifespan function**: Runs once when the server starts. It pre-loads the Whisper and OpenAI models into memory so the first request doesn't have a long delay. The `yield` means "the server is now running and ready to accept requests."
+- **Lifespan function**: Runs once when the server starts. It pre-loads the Whisper and Gemini models into memory so the first request doesn't have a long delay. The `yield` means "the server is now running and ready to accept requests."
 
 ```python
 app = FastAPI(
@@ -357,10 +357,10 @@ class Settings(BaseSettings):
     API_HOST: str = "0.0.0.0"
     API_PORT: int = int(os.getenv("PORT", "8000"))
     UPLOAD_DIR: str = "temp_uploads"
-    WHISPER_MODEL: str = os.getenv("WHISPER_MODEL", "base")
+    WHISPER_MODEL: str = os.getenv("WHISPER_MODEL", "medium")
     WHISPER_DEVICE: str = os.getenv("WHISPER_DEVICE", "cpu")
-    OPENAI_API_KEY: Any = os.getenv("OPENAI_API_KEY", None)
-    OPENAI_MODEL: str = "gpt-4.1-2025-04-14"
+    GOOGLE_API_KEY: Any = os.getenv("GOOGLE_API_KEY", None)
+    GOOGLE_MODEL: str = os.getenv("GOOGLE_MODEL", "gemini-3.1-flash-lite-preview")
 ```
 
 **Key settings explained:**
@@ -370,10 +370,10 @@ class Settings(BaseSettings):
 | `DEBUG` | Enables debug logging and auto-reload | `false` |
 | `API_HOST` | IP address to bind to (`0.0.0.0` = all interfaces) | `0.0.0.0` |
 | `API_PORT` | Port number for the server | `8000` |
-| `WHISPER_MODEL` | Which Whisper model to use (`tiny`, `base`, `small`, `medium`, `large`) | `base` |
+| `WHISPER_MODEL` | Which Whisper model to use (`tiny`, `base`, `small`, `medium`, `large`) | `medium` |
 | `WHISPER_DEVICE` | Run Whisper on CPU or GPU (`cpu` / `cuda`) | `cpu` |
-| `OPENAI_API_KEY` | Your OpenAI API key for GPT-4.1 | None (must be set) |
-| `OPENAI_MODEL` | Which GPT model version to use | `gpt-4.1-2025-04-14` |
+| `GOOGLE_API_KEY` | Your Google Gemini API key | None (must be set) |
+| `GOOGLE_MODEL` | Which Gemini model version to use | `gemini-3.1-flash-lite-preview` |
 
 The `__init__` method also creates the `temp_uploads` directory if it doesn't exist.
 
@@ -381,13 +381,13 @@ The `__init__` method also creates the `temp_uploads` directory if it doesn't ex
 
 ### 5.3 `config/prompts.py` — The AI Prompt Engineering
 
-**Purpose:** This is the **most critical file for accuracy**. It contains the detailed instructions sent to GPT-4.1, telling it exactly how to interpret voice transcriptions and map them to form fields.
+**Purpose:** This is the **most critical file for accuracy**. It contains the detailed instructions sent to Google Gemini, telling it exactly how to interpret voice transcriptions (always in phonetic English) and map them to form fields. The multilingual Bengali logic lives entirely in this file.
 
 **The function `get_form_mapping_prompt()` returns two things:**
-1. A `PromptTemplate` — the text instructions for GPT-4.1
-2. A `JsonOutputParser` — forces GPT-4.1 to return valid JSON
+1. A `PromptTemplate` — the text instructions for Gemini
+2. A `JsonOutputParser` — forces Gemini to return valid JSON
 
-**The prompt instructs GPT-4.1 to:**
+**The prompt instructs Gemini to:**
 
 1. **Analyze each form field** — look at its label, type, placeholder text to understand what data it expects.
 
@@ -407,7 +407,7 @@ The `__init__` method also creates the `temp_uploads` directory if it doesn't ex
    - **Radio buttons**: Output the matching option label text
    - **Checkboxes**: Output "true" or "false"
 
-5. **Preserve non-English languages** — if the user speaks in Bengali, all values must stay in Bengali script. E.g., "আমার নাম রাজু" → `firstName: "রাজু"`.
+5. **Detect language directives** — The prompt first scans the transcript for phrases like *"fill in Bengali"*, *"write it in Bengali"*, *"I am speaking Bengali"*. If found, all free-text fields are written in Bengali script. E.g., "raju das" (the phonetic English from Whisper) → `firstName: "রাজু দাস"`. Structured fields (email, phone, dropdowns) always stay in their original format regardless.
 
 6. **Only include mentioned fields** — don't hallucinate values for fields the user didn't talk about.
 
@@ -415,7 +415,7 @@ The prompt uses LangChain's `PromptTemplate` with two variables:
 - `{fields_json}` — the form fields from the web page
 - `{transcribed_text}` — what the user said
 
-And `{format_instructions}` — auto-generated instructions that tell GPT-4.1 to return JSON matching the `FormFieldMapping` schema.
+And `{format_instructions}` — auto-generated instructions that tell Gemini to return JSON matching the `FormFieldMapping` schema.
 
 ---
 
@@ -458,10 +458,10 @@ async def process_audio(
 
 4. **Clean up temp file** — deletes it in a `finally` block (even if transcription fails).
 
-5. **Map with OpenAI:**
+5. **Map with Gemini:**
    ```python
-   openai_service = get_openai_service()
-   mapped_form_data = openai_service.map_text_to_fields(transcribed_text, json.dumps(form_data))
+   gemini_service = get_gemini_service()
+   mapped_form_data = gemini_service.map_text_to_fields(transcribed_text, json.dumps(form_data))
    ```
 
 6. **Return response:**
@@ -528,20 +528,20 @@ def get_whisper_service() -> WhisperService:
 
 ---
 
-### 5.6 `services/openai_service.py` — The AI Brain (LLM)
+### 5.6 `services/gemini_service.py` — The AI Brain (LLM)
 
-**Purpose:** Takes the transcribed text and the form field structure, sends them to GPT-4.1, and gets back a mapping of field IDs to values.
+**Purpose:** Takes the transcribed text and the form field structure, sends them to **Google Gemini**, and gets back a mapping of field IDs to values.
 
 **How it works:**
 
 ```python
 def __init__(self):
-    self.model = ChatOpenAI(
-        model=settings.OPENAI_MODEL,  # "gpt-4.1-2025-04-14"
-        temperature=0.2               # Low temperature = more deterministic
+    self.model = ChatGoogleGenerativeAI(
+        model=settings.GOOGLE_MODEL,  # "gemini-3.1-flash-lite-preview"
+        temperature=0.7               # Slightly creative to handle varied phrasing
     )
 ```
-- Uses LangChain's `ChatOpenAI` wrapper. Temperature 0.2 means the AI gives consistent, predictable answers (not creative/random).
+- Uses LangChain's `ChatGoogleGenerativeAI` wrapper. Temperature 0.7 gives the model enough flexibility to handle imperfect phonetic transcriptions (especially for multilingual inputs) while still being deterministic enough for structured JSON output.
 
 ```python
 def map_text_to_fields(self, transcribed_text: str, fields_json: str) -> dict:
@@ -552,22 +552,22 @@ def map_text_to_fields(self, transcribed_text: str, fields_json: str) -> dict:
         "transcribed_text": transcribed_text
     })
 ```
-- **LangChain chain**: This uses LangChain's pipe operator (`|`) to create a processing pipeline:
-  1. `prompt_template` — fills in the template with the actual data
-  2. `self.model` — sends the filled prompt to GPT-4.1
-  3. `parser` — parses GPT-4.1's response as JSON
+- **LangChain chain**: Uses LangChain's pipe operator (`|`) to create a processing pipeline:
+  1. `prompt_template` — fills in the template with the actual transcription and form fields
+  2. `self.model` — sends the filled prompt to Google Gemini via the API
+  3. `parser` — parses Gemini's JSON response into a Python dictionary
 
-- **Resilient extraction**: The code handles different response formats GPT might return:
+- **Resilient extraction**: The code handles different response shapes Gemini might return:
   ```python
   if isinstance(parsed_response, dict):
       mapped_data = parsed_response.get("mapped_fields", parsed_response)
       if len(mapped_data) == 1 and isinstance(list(mapped_data.values())[0], dict):
           mapped_data = list(mapped_data.values())[0]
   ```
-  - If GPT wraps the result in `{"mapped_fields": {...}}`, it extracts the inner dict.
-  - If GPT double-wraps it, it unwraps that too.
+  - If Gemini wraps the result in `{"mapped_fields": {...}}`, it extracts the inner dict.
+  - If Gemini double-wraps it, it unwraps that too.
 
-- **Post-processing**: Calls `post_process_fields()` to clean up the data before returning.
+- **Post-processing**: Calls `post_process_fields()` to normalize the data (phone digits, email casing, boolean normalization) before returning.
 
 ---
 
@@ -581,7 +581,7 @@ class FormFieldMapping(BaseModel):
         description="Dictionary mapping field IDs to extracted values."
     )
 ```
-- Used by the JSON output parser to tell GPT-4.1 what shape the output should be.
+- Used by the JSON output parser to tell Gemini what shape the output should be.
 
 ```python
 class ProcessResponse(BaseModel):
@@ -596,7 +596,7 @@ class ProcessResponse(BaseModel):
 
 ### 5.8 `utils/field_processor.py` — Post-Processing & Normalization
 
-**Purpose:** Cleans up and normalizes the values GPT-4.1 returns before sending them back to the Chrome Extension.
+**Purpose:** Cleans up and normalizes the values Google Gemini returns before sending them back to the Chrome Extension.
 
 **Key functions:**
 
@@ -685,7 +685,8 @@ def setup_logger(name: str = "FormFiller"):
 | `numpy` | >=1.26, <2.0 | Numerical computing (required by Whisper) |
 | `langchain` | 0.3.7 | LLM orchestration framework |
 | `langchain-core` | 0.3.15 | Core LangChain abstractions |
-| `langchain-openai` | 0.2.0 | OpenAI integration for LangChain |
+| `langchain-google-genai` | >=4.2.1 | Google Gemini integration for LangChain |
+| `google-genai` | >=1.56.0 | Google GenAI SDK (underlying Gemini client) |
 | `python-dotenv` | 1.0.1 | Loads `.env` file for environment variables |
 
 ---
@@ -1158,7 +1159,7 @@ if (currentValue) fieldInfo.currentValue = currentValue;
 if (options.length > 0) fieldInfo.options = options;
 if (element.classList.contains('select2-hidden-accessible')) fieldInfo.isSelect2 = true;
 ```
-- Only includes non-empty optional properties to reduce JSON payload size (important since this gets sent to GPT-4.1 and costs tokens).
+- Only includes non-empty optional properties to reduce JSON payload size (important since this gets sent to Google Gemini and the fewer tokens, the faster and cheaper the response).
 
 #### Example Output:
 ```json
@@ -1670,30 +1671,31 @@ User's voice → MediaRecorder → WebM audio blob → Backend → Whisper Model
 
 The `base` model (default) offers a good balance between speed and accuracy. Larger models (`small`, `medium`, `large`) are more accurate but slower.
 
-### Stage 2: Text → Form Mapping (GPT-4.1)
+### Stage 2: Text → Form Mapping (Google Gemini)
 
 ```
-Raw text + Form field JSON → GPT-4.1 → { fieldId: value } mapping
+Raw text + Form field JSON → Google Gemini → { fieldId: value } mapping
 ```
 
-GPT-4.1 receives:
-1. The raw transcribed text
+Gemini receives:
+1. The raw transcribed text (always in phonetic English — even if the user spoke Bengali)
 2. A JSON description of every form field (with IDs, types, labels, options)
 3. Detailed instructions (the prompt from `prompts.py`)
 
 It outputs structured JSON mapping each field ID to the correct value, with:
 - Spelling corrections applied
-- Speech artifacts converted (e.g., "at the rate" → "@")
+- Speech artifacts converted (e.g., "at the rate" → "@", "dot com" → ".com")
 - Proper formatting per field type
-- Language preservation (Bengali stays Bengali)
+- Language directive detection ("fill in Bengali" → all text fields written in Bengali script)
+- Phonetic Bengali interpretation ("raju das" → "রাজু দাস" when Bengali mode is on)
 - Only mentioned fields included
 
 ### LangChain Pipeline:
 ```
-PromptTemplate → ChatOpenAI (GPT-4.1) → JsonOutputParser
+PromptTemplate → ChatGoogleGenerativeAI → JsonOutputParser
        ↓                    ↓                    ↓
  "You are an          Sends to                Parses the
-  intelligent          OpenAI API              JSON response
+  intelligent          Google Gemini API       JSON response
   form-filling         and gets                into a Python
   assistant..."        raw response            dictionary
 ```
@@ -1702,26 +1704,59 @@ PromptTemplate → ChatOpenAI (GPT-4.1) → JsonOutputParser
 
 ## 11. Multi-Language Support — How It Works
 
-The system supports multilingual form filling at every stage:
+The system supports multilingual form filling through a carefully designed two-stage pipeline:
 
-1. **Whisper** can transcribe audio in many languages (English, Bengali, Hindi, Spanish, etc.). The `language="en"` parameter is a hint but Whisper can auto-detect.
+### The Core Insight: Whisper Always Transcribes in English
 
-2. **The prompt** explicitly instructs GPT-4.1:
-   > "If the user speaks in Bengali (or any non-English language), output ALL field values in the SAME language and script. Do not translate to English."
+Whisper is configured with `language="en"`. This means **regardless of what language the user actually speaks**, the transcription output is always English text (or a phonetic English approximation of other languages).
 
-3. **`field_processor.py`** handles non-Latin digits:
+- If the user says *"রাজু দাস"* (Bengali), Whisper writes: `"raju das"`
+- If the user says *"purush"* (Bengali for "male"), Whisper writes: `"purush"`
+- If the user says *"bharatiya"* (Bengali for "Indian"), Whisper writes: `"bharatiya"`
+
+### How Gemini Handles This
+
+The prompt (`config/prompts.py`) tells Gemini:
+> *"The audio is always transcribed to ENGLISH text by the speech engine, regardless of what language the user actually spoke. This means even if the user spoke Bengali, the transcription will be an English transliteration/phonetic approximation. You must interpret the English transcription intelligently."*
+
+**Step 0 in the prompt — Language Directive Detection:**
+Before processing any field, Gemini scans the entire transcript for phrases like:
+- *"I am speaking in Bengali"*, *"fill in Bengali"*, *"write it in Bengali"*, *"in Bengali please"*
+
+If found → `TARGET_LANGUAGE = Bengali`. All free-text fields (names, addresses, descriptions) are written in Bengali script.
+If not found → `TARGET_LANGUAGE = English` (default).
+
+**Fields that always stay in original format** (regardless of language):
+- Dropdowns / Select: exact option text from the `options` array
+- Radio buttons: exact option label from the `options` array
+- Emails: always lowercase English
+- Phone numbers: always ASCII digits (0-9)
+- Dates: always `YYYY-MM-DD` with ASCII digits
+- Checkboxes: always `"true"` or `"false"`
+
+**Example — Understanding Bengali intent without Bengali input:**
+- User says *"purush"* → Whisper writes `"purush"` → radio field has `["Male", "Female"]` → Gemini knows "purush" means male → output: `"Male"`
+- User says *"bharatiya"* → Whisper writes `"bharatiya"` → dropdown has `["Indian", "Bangladesh"]` → Gemini knows "bharatiya" means Indian → output: `"Indian"`
+
+### Non-Latin Digit Normalization
+
+3. **`field_processor.py`** handles non-Latin digits that Gemini might output:
    - Bengali: ০১২৩৪৫৬৭৮৯ → 0123456789
    - Devanagari: ०१२३४५६७८९ → 0123456789
    - Arabic-Indic: ٠١٢٣٤٥٦٧٨٩ → 0123456789
 
-4. **`formFiller.js`** in the Chrome Extension also has its own non-Latin digit converter for fields that require ASCII (phone numbers, dates).
+4. **`formFiller.js`** in the Chrome Extension also has its own non-Latin digit converter for fields that require ASCII (phone numbers, dates, number inputs).
 
-**Example Bengali flow:**
-- User says: "আমার নাম রাজু দাস, বয়স ৩৫, ঠিকানা ১২ এমজি রোড কলকাতা"
-- Whisper transcribes: "আমার নাম রাজু দাস বয়স ৩৫ ঠিকানা ১২ এমজি রোড কলকাতা"
-- GPT-4.1 maps: `{ "cfname": "রাজু", "clname": "দাস", "cage": "৩৫", "caddress": "১২ এমজি রোড, কলকাতা" }`
-- `field_processor.py` converts age: `"৩৫"` → `"35"` (because age field needs digits)
-- `formFiller.js` fills the form with Bengali text for text fields and ASCII digits for number fields.
+**Complete Bengali flow example:**
+- User says: *"fill in Bengali, my name is raju das, age 35, address 12 MG Road Kolkata"*
+- Whisper transcribes (always in English): `"fill in bengali my name is raju das age 35 address 12 mg road kolkata"`
+- Gemini detects `"fill in bengali"` → `TARGET_LANGUAGE = Bengali`
+- Gemini maps:
+  ```json
+  { "cfname": "রাজু দাস", "cage": "35", "caddress": "১২ এমজি রোড, কলকাতা" }
+  ```
+- `field_processor.py`: age `"35"` stays as `"35"` (already ASCII)
+- `formFiller.js` fills the form: Bengali text in text fields, ASCII digits in number fields.
 
 ---
 
@@ -1732,10 +1767,10 @@ The system supports multilingual form filling at every stage:
 |-------|---------------|--------------|
 | Invalid JSON in form_data | `routes.py` | Returns `success=false` with message |
 | Whisper model not loaded | `whisper_service.py` | Raises RuntimeError |
-| OpenAI API key missing | `openai_service.py` | Raises ValueError on startup |
+| Google API key missing | `gemini_service.py` | Raises ValueError on startup |
 | Transcription fails | `routes.py` | Returns error response, temp file still cleaned |
-| GPT returns bad JSON | `openai_service.py` | LangChain parser retries, else returns `{}` |
-| GPT wraps response oddly | `openai_service.py` | Resilient unwrapping logic handles it |
+| Gemini returns bad JSON | `gemini_service.py` | LangChain parser retries, else returns `{}` |
+| Gemini wraps response oddly | `gemini_service.py` | Resilient unwrapping logic handles it |
 
 ### Chrome Extension Errors
 | Error | Where Handled | What Happens |
@@ -1818,7 +1853,7 @@ The system supports multilingual form filling at every stage:
    │              │                  │                     │        Whisper:  │
    │              │                  │                     │        Audio→Text│
    │              │                  │                     │                  │
-   │              │                  │                     │        GPT-4.1:  │
+   │              │                  │                     │        Gemini:   │
    │              │                  │                     │        Text→Map  │
    │              │                  │                     │                  │
    │              │                  │                     │    field_processor│
@@ -1856,7 +1891,7 @@ This project combines:
 - **DOM manipulation** (QuerySelector, event dispatching) to extract and fill forms
 - **FastAPI** (Python web framework) for the REST API backend
 - **Faster-Whisper** (speech-to-text) to transcribe voice in any language
-- **GPT-4.1** (large language model) to intelligently map voice data to form fields
+- **Google Gemini** (large language model) to intelligently map voice data to form fields, with multilingual/Bengali support
 - **LangChain** (LLM orchestration) to structure prompts and parse outputs
 - **Pydantic** (data validation) to ensure clean request/response schemas
 
